@@ -26,8 +26,7 @@
     const telefono = message?.from || "";
     const nombre = contact?.profile?.name || "";
     const texto = message?.text?.body || "";
-    const fecha = new Date().toISOString();
-
+    const fecha = new Date().toISOString().split("T")[0];
     const airtableResponse = await fetch(
       `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${encodeURIComponent(process.env.AIRTABLE_TABLE_NAME)}`,
       {
