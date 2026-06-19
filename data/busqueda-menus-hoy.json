@@ -1,0 +1,44 @@
+[
+  {
+    "restaurante": "Casa Pepe Demo",
+    "slug": "casa-pepe-demo",
+    "municipio": "Hoyo de Manzanares",
+    "url": "/restaurantes/casa-pepe-demo/",
+    "fecha_menu": "2026-06-19",
+    "estado_menu": "actualizado",
+    "lat": 40.62265,
+    "lng": -3.90789,
+    "titulo_menu": "Menú del día",
+    "precio_desde": 12,
+    "precio_hasta": 12,
+    "platos": [
+      "lentejas",
+      "ensalada",
+      "pollo al ajillo",
+      "merluza"
+    ],
+    "keywords": [
+      "lentejas",
+      "ensalada",
+      "pollo",
+      "pollo al ajillo",
+      "merluza",
+      "pescado",
+      "carne",
+      "menú del día",
+      "menu del dia",
+      "postre",
+      "café",
+      "cafe"
+    ],
+    "etiquetas": [
+      "menu_del_dia",
+      "carne",
+      "pescado"
+    ],
+    "para_recoger": true,
+    "descuento_buscamenu": false,
+    "tiene_carta": true,
+    "url_carta": null
+  }
+]
