@@ -1,0 +1,642 @@
+```html
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buscar menús · Buscamenú</title>
+  <meta name="description" content="Busca restaurantes y platos del menú del día en Buscamenú.">
+
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --card: #fffaf2;
+      --ink: #261f1a;
+      --muted: #76695f;
+      --line: #e4d5c4;
+      --accent: #36b8e6;
+      --accent-dark: #168db6;
+      --brown: #8b5a2b;
+      --green: #2f7d46;
+      --shadow: 0 18px 45px rgba(35, 24, 14, .14);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .hero {
+      min-height: 280px;
+      padding: 36px 24px;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(rgba(0,0,0,.52), rgba(0,0,0,.42)),
+        radial-gradient(circle at 20% 20%, #8bbd92, transparent 34rem),
+        linear-gradient(135deg, #5f7f64, #2f3d38);
+      color: white;
+    }
+
+    .hero-inner {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-mark {
+      width: 78px;
+      height: 78px;
+      border-radius: 28px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      font-size: 38px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.24);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: .95;
+      letter-spacing: -.06em;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .restaurant-access {
+      border: 1px solid rgba(255,255,255,.76);
+      border-radius: 999px;
+      padding: 10px 18px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+      background: rgba(0,0,0,.18);
+    }
+
+    .main {
+      width: min(1100px, calc(100% - 32px));
+      margin: -56px auto 64px;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 24px;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel,
+    .results,
+    .map-box {
+      background: rgba(255,250,242,.96);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 28px;
+    }
+
+    .panel h2 {
+      margin: 0 0 18px;
+      font-size: 26px;
+      letter-spacing: -.04em;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      border: 0;
+      border-bottom: 2px solid var(--accent);
+      background: transparent;
+      padding: 10px 4px;
+      font-size: 17px;
+      outline: none;
+    }
+
+    .checks {
+      display: grid;
+      gap: 10px;
+      margin: 22px 0;
+      color: var(--muted);
+    }
+
+    .checks label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 15px;
+    }
+
+    .checks input {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--accent);
+    }
+
+    .button {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 18px;
+      font-weight: 900;
+      color: white;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(54,184,230,.24);
+    }
+
+    .button:hover {
+      background: var(--accent-dark);
+    }
+
+    .map-box {
+      min-height: 260px;
+      padding: 22px;
+      margin-bottom: 24px;
+      background:
+        linear-gradient(rgba(199,235,208,.92), rgba(199,235,208,.92)),
+        repeating-linear-gradient(38deg, transparent 0 34px, rgba(255,255,255,.8) 35px 37px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-box h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      letter-spacing: -.03em;
+    }
+
+    .map-box p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 620px;
+    }
+
+    .pin {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      background: var(--accent);
+      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    }
+
+    .pin::after {
+      content: "";
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: white;
+      left: 10px;
+      top: 10px;
+    }
+
+    .pin.one {
+      right: 34%;
+      top: 42%;
+    }
+
+    .pin.two {
+      right: 24%;
+      top: 56%;
+      background: #9ca9ad;
+    }
+
+    .legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 142px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+      background: var(--accent);
+    }
+
+    .dot.gray {
+      background: #9ca9ad;
+    }
+
+    .results {
+      padding: 24px;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      margin-bottom: 16px;
+    }
+
+    .results h2 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -.04em;
+    }
+
+    .count {
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .cards {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -.03em;
+    }
+
+    .municipio {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .price {
+      background: var(--brown);
+      color: white;
+      border-radius: 14px;
+      padding: 9px 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .plates {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: #edf7fb;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .link-button {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      background: var(--green);
+      color: white;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    footer {
+      background: #1c1c1c;
+      color: white;
+      padding: 44px 24px;
+      margin-top: 36px;
+    }
+
+    .footer-inner {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      color: rgba(255,255,255,.78);
+    }
+
+    .footer-inner strong {
+      display: block;
+      color: white;
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 880px) {
+      .hero-inner,
+      .main {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner {
+        flex-direction: column;
+      }
+
+      .restaurant-access {
+        align-self: flex-start;
+      }
+
+      .main {
+        margin-top: -36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="brand">
+        <div class="brand-mark">🍴</div>
+        <div>
+          <h1>Busca menú</h1>
+          <p>Hoyo de Manzanares</p>
+        </div>
+      </div>
+
+      <a class="restaurant-access" href="/restaurantes/casa-pepe-demo/">
+        Acceso restaurantes
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <aside class="panel">
+      <h2>Buscar menú</h2>
+
+      <div class="field">
+        <label for="restaurantSearch">Buscar por restaurante</label>
+        <input id="restaurantSearch" type="text" placeholder="Casa Pepe, Pivo, La Lola...">
+      </div>
+
+      <div class="field">
+        <label for="plateSearch">Buscar por plato</label>
+        <input id="plateSearch" type="text" placeholder="pollo, paella, lentejas...">
+      </div>
+
+      <div class="field">
+        <label for="maxPrice">Precio hasta</label>
+        <input id="maxPrice" type="number" min="0" step="0.5" placeholder="12">
+      </div>
+
+      <div class="checks">
+        <label>
+          <input id="takeaway" type="checkbox">
+          Para pasar a recoger
+        </label>
+
+        <label>
+          <input id="discount" type="checkbox">
+          Con descuento exclusivo Buscamenú
+        </label>
+
+        <label>
+          <input id="hasMenu" type="checkbox">
+          También disponible carta
+        </label>
+      </div>
+
+      <button class="button" id="searchButton">BUSCAR</button>
+    </aside>
+
+    <section>
+      <div class="map-box">
+        <h2>Mapa de menús de hoy</h2>
+        <p>
+          Esta primera versión usa datos estáticos. El siguiente paso será situar cada marcador
+          con latitud y longitud reales guardadas en Airtable.
+        </p>
+
+        <div class="pin one" title="Menú actualizado"></div>
+        <div class="pin two" title="Menú sin actualizar"></div>
+
+        <div class="legend">
+          <span><i class="dot"></i> Menú actualizado</span>
+          <span><i class="dot gray"></i> Menú sin actualizar</span>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="results-header">
+          <h2>Resultados</h2>
+          <div class="count" id="count">Cargando...</div>
+        </div>
+
+        <div class="cards" id="results"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <strong>Contáctanos</strong>
+      <p>Demo inicial del buscador público de Buscamenú.</p>
+      <p>Más adelante aquí irá el formulario real, enlaces legales y acceso para restaurantes.</p>
+    </div>
+  </footer>
+
+  <script>
+    let menus = [];
+
+    const restaurantInput = document.getElementById("restaurantSearch");
+    const plateInput = document.getElementById("plateSearch");
+    const maxPriceInput = document.getElementById("maxPrice");
+    const takeawayInput = document.getElementById("takeaway");
+    const discountInput = document.getElementById("discount");
+    const hasMenuInput = document.getElementById("hasMenu");
+    const button = document.getElementById("searchButton");
+    const results = document.getElementById("results");
+    const count = document.getElementById("count");
+
+    function normalize(text) {
+      return String(text || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\\u0300-\\u036f]/g, "");
+    }
+
+    function matchesText(item, fieldValue, fields) {
+      const query = normalize(fieldValue);
+      if (!query) return true;
+
+      const haystack = fields
+        .map(field => {
+          const value = item[field];
+          return Array.isArray(value) ? value.join(" ") : value;
+        })
+        .join(" ");
+
+      return normalize(haystack).includes(query);
+    }
+
+    function render(items) {
+      count.textContent = items.length === 1
+        ? "1 resultado"
+        : items.length + " resultados";
+
+      if (!items.length) {
+        results.innerHTML = `
+          <div class="empty">
+            No hay menús que coincidan con esta búsqueda. Prueba con otro plato, restaurante o precio.
+          </div>
+        `;
+        return;
+      }
+
+      results.innerHTML = items.map(item => {
+        const platos = Array.isArray(item.platos) ? item.platos.join(", ") : "";
+        const etiquetas = Array.isArray(item.etiquetas) ? item.etiquetas : [];
+        const precio = item.precio_desde === item.precio_hasta
+          ? `${item.precio_desde} €`
+          : `${item.precio_desde}–${item.precio_hasta} €`;
+
+        return `
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <h3>${item.restaurante}</h3>
+                <p class="municipio">${item.municipio} · ${item.titulo_menu || "Menú del día"}</p>
+              </div>
+              <div class="price">${precio}</div>
+            </div>
+
+            <p class="plates">${platos}</p>
+
+            <div class="tags">
+              ${etiquetas.map(tag => `<span class="tag">${tag.replaceAll("_", " ")}</span>`).join("")}
+            </div>
+
+            <div class="card-actions">
+              <a class="link-button" href="${item.url}">Ver menú</a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function filterMenus() {
+      const maxPrice = Number(maxPriceInput.value);
+
+      const filtered = menus.filter(item => {
+        const restaurantOk = matchesText(item, restaurantInput.value, ["restaurante", "municipio", "slug"]);
+        const plateOk = matchesText(item, plateInput.value, ["platos", "keywords", "etiquetas"]);
+        const priceOk = !maxPriceInput.value || Number(item.precio_desde || 0) <= maxPrice;
+        const takeawayOk = !takeawayInput.checked || item.para_recoger === true;
+        const discountOk = !discountInput.checked || item.descuento_buscamenu === true;
+        const hasMenuOk = !hasMenuInput.checked || item.tiene_carta === true;
+
+        return restaurantOk && plateOk && priceOk && takeawayOk && discountOk && hasMenuOk;
+      });
+
+      render(filtered);
+    }
+
+    async function loadMenus() {
+      try {
+        const response = await fetch("/data/busqueda-menus-hoy.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
+
+        menus = await response.json();
+        render(menus);
+      } catch (error) {
+        count.textContent = "Error";
+        results.innerHTML = `
+          <div class="empty">
+            No se pudo cargar el archivo de búsqueda. Revisa que exista
+            <strong>/data/busqueda-menus-hoy.json</strong>.
+          </div>
+        `;
+      }
+    }
+
+    button.addEventListener("click", filterMenus);
+    restaurantInput.addEventListener("input", filterMenus);
+    plateInput.addEventListener("input", filterMenus);
+    maxPriceInput.addEventListener("input", filterMenus);
+    takeawayInput.addEventListener("change", filterMenus);
+    discountInput.addEventListener("change", filterMenus);
+    hasMenuInput.addEventListener("change", filterMenus);
+
+    loadMenus();
+  </script>
+</body>
+</html>
+```
