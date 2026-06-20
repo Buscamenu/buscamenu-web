@@ -1,25 +1,26 @@
-```html
+
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Buscar menús · Buscamenú</title>
-  <meta name="description" content="Busca restaurantes y platos del menú del día en Buscamenú.">
+  <title>Busca menú · Hoyo de Manzanares</title>
+  <meta name="description" content="Busca menús del día por restaurante, plato y precio en Hoyo de Manzanares.">
 
   <style>
     :root {
-      --bg: #f4efe7;
-      --card: #fffaf2;
-      --ink: #261f1a;
-      --muted: #76695f;
-      --line: #e4d5c4;
-      --accent: #36b8e6;
-      --accent-dark: #168db6;
-      --brown: #8b5a2b;
+      --blue: #36b8e6;
+      --blue-dark: #168db6;
+      --cream: #fff8ed;
+      --paper: #fffdf8;
+      --ink: #26201c;
+      --muted: #74695f;
+      --line: #e5d8c7;
       --green: #2f7d46;
-      --shadow: 0 18px 45px rgba(35, 24, 14, .14);
-      --radius: 24px;
+      --gray-pin: #9ea9ad;
+      --brown: #8b5a2b;
+      --shadow: 0 18px 45px rgba(27, 20, 14, .16);
+      --radius: 28px;
     }
 
     * {
@@ -30,147 +31,154 @@
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
-      background: var(--bg);
+      background: #efe6da;
     }
 
     a {
       color: inherit;
     }
 
-    .hero {
-      min-height: 280px;
-      padding: 36px 24px;
-      display: flex;
-      align-items: center;
-      background:
-        linear-gradient(rgba(0,0,0,.52), rgba(0,0,0,.42)),
-        radial-gradient(circle at 20% 20%, #8bbd92, transparent 34rem),
-        linear-gradient(135deg, #5f7f64, #2f3d38);
+    .village-hero {
+      min-height: 360px;
+      position: relative;
       color: white;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.62), rgba(0,0,0,.34)),
+        radial-gradient(circle at 20% 20%, rgba(111,154,112,.95), transparent 34rem),
+        linear-gradient(135deg, #5c765f, #283a36);
+      overflow: hidden;
+    }
+
+    .village-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, transparent 0 45%, rgba(255,255,255,.08) 45% 46%, transparent 46% 100%),
+        radial-gradient(circle at 78% 30%, rgba(255,255,255,.18), transparent 15rem);
+      opacity: .8;
+      pointer-events: none;
     }
 
     .hero-inner {
-      width: min(1100px, 100%);
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      padding: 34px 0 92px;
+      display: grid;
+      grid-template-columns: 1fr auto;
       gap: 24px;
+      align-items: start;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 22px;
     }
 
-    .brand-mark {
-      width: 78px;
-      height: 78px;
-      border-radius: 28px;
-      background: var(--accent);
+    .logo {
+      width: 92px;
+      height: 92px;
+      border-radius: 32px;
+      background: var(--blue);
       display: grid;
       place-items: center;
-      font-size: 38px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.24);
+      font-size: 44px;
+      box-shadow: 0 18px 42px rgba(0,0,0,.28);
+      flex: 0 0 auto;
     }
 
     .brand h1 {
       margin: 0;
-      font-size: clamp(38px, 6vw, 68px);
-      line-height: .95;
-      letter-spacing: -.06em;
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: .9;
+      letter-spacing: -.07em;
     }
 
     .brand p {
-      margin: 8px 0 0;
-      font-size: 16px;
+      margin: 10px 0 0;
+      font-size: clamp(16px, 2vw, 22px);
       font-weight: 900;
-      letter-spacing: .08em;
       text-transform: uppercase;
+      letter-spacing: .08em;
     }
 
     .restaurant-access {
-      border: 1px solid rgba(255,255,255,.76);
-      border-radius: 999px;
-      padding: 10px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
-      font-weight: 800;
-      font-size: 14px;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 999px;
+      padding: 11px 18px;
       background: rgba(0,0,0,.18);
+      font-weight: 850;
+      white-space: nowrap;
     }
 
-    .main {
-      width: min(1100px, calc(100% - 32px));
-      margin: -56px auto 64px;
-      display: grid;
-      grid-template-columns: 380px 1fr;
-      gap: 24px;
-      align-items: start;
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: -70px auto 0;
       position: relative;
       z-index: 2;
+      padding-bottom: 44px;
     }
 
-    .panel,
-    .results,
-    .map-box {
-      background: rgba(255,250,242,.96);
+    .search-layout {
+      display: grid;
+      grid-template-columns: 390px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .search-panel,
+    .map-panel,
+    .results-panel {
+      background: rgba(255,253,248,.97);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
-    .panel {
+    .search-panel {
       padding: 28px;
+      position: sticky;
+      top: 18px;
     }
 
-    .panel h2 {
-      margin: 0 0 18px;
-      font-size: 26px;
-      letter-spacing: -.04em;
+    .search-panel h2 {
+      margin: 0 0 22px;
+      font-size: 31px;
+      letter-spacing: -.05em;
     }
 
     .field {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .field label {
       display: block;
       margin-bottom: 7px;
-      color: var(--muted);
       font-size: 14px;
-      font-weight: 800;
+      color: var(--muted);
+      font-weight: 850;
     }
 
-    input[type="text"],
-    input[type="number"] {
+    .field input {
       width: 100%;
       border: 0;
-      border-bottom: 2px solid var(--accent);
+      border-bottom: 2px solid var(--blue);
       background: transparent;
-      padding: 10px 4px;
-      font-size: 17px;
+      padding: 11px 4px;
+      font-size: 18px;
       outline: none;
+      color: var(--ink);
     }
 
-    .checks {
-      display: grid;
-      gap: 10px;
-      margin: 22px 0;
-      color: var(--muted);
-    }
-
-    .checks label {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      font-size: 15px;
-    }
-
-    .checks input {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--accent);
+    .field input::placeholder {
+      color: #a89b8f;
     }
 
     .button {
@@ -178,79 +186,158 @@
       border: 0;
       border-radius: 999px;
       padding: 15px 18px;
-      font-weight: 900;
+      background: var(--blue);
       color: white;
-      background: var(--accent);
+      font-weight: 950;
       cursor: pointer;
-      box-shadow: 0 10px 22px rgba(54,184,230,.24);
+      box-shadow: 0 12px 26px rgba(54,184,230,.26);
+      margin-top: 8px;
     }
 
     .button:hover {
-      background: var(--accent-dark);
+      background: var(--blue-dark);
     }
 
-    .map-box {
-      min-height: 260px;
-      padding: 22px;
-      margin-bottom: 24px;
-      background:
-        linear-gradient(rgba(199,235,208,.92), rgba(199,235,208,.92)),
-        repeating-linear-gradient(38deg, transparent 0 34px, rgba(255,255,255,.8) 35px 37px);
+    .hint {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .map-panel {
+      min-height: 390px;
       position: relative;
       overflow: hidden;
+      margin-bottom: 24px;
+      background:
+        linear-gradient(rgba(211,236,216,.94), rgba(211,236,216,.94)),
+        repeating-linear-gradient(28deg, transparent 0 42px, rgba(255,255,255,.76) 43px 46px),
+        repeating-linear-gradient(118deg, transparent 0 58px, rgba(255,255,255,.44) 59px 61px);
     }
 
-    .map-box h2 {
+    .map-info {
+      position: relative;
+      z-index: 2;
+      padding: 24px;
+      max-width: 630px;
+    }
+
+    .map-info h2 {
       margin: 0 0 8px;
-      font-size: 24px;
-      letter-spacing: -.03em;
+      font-size: 28px;
+      letter-spacing: -.04em;
     }
 
-    .map-box p {
+    .map-info p {
       margin: 0;
       color: var(--muted);
-      max-width: 620px;
+      line-height: 1.5;
     }
 
-    .pin {
+    .fake-road {
       position: absolute;
-      width: 34px;
-      height: 34px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(170,190,170,.35);
+      border-radius: 999px;
+      transform-origin: center;
+    }
+
+    .road-1 {
+      width: 680px;
+      height: 22px;
+      left: 100px;
+      top: 205px;
+      transform: rotate(-16deg);
+    }
+
+    .road-2 {
+      width: 560px;
+      height: 18px;
+      left: 260px;
+      top: 140px;
+      transform: rotate(42deg);
+    }
+
+    .road-3 {
+      width: 440px;
+      height: 16px;
+      left: 360px;
+      top: 290px;
+      transform: rotate(-42deg);
+    }
+
+    .map-pin {
+      position: absolute;
+      width: 38px;
+      height: 38px;
       border-radius: 50% 50% 50% 0;
       transform: rotate(-45deg);
-      background: var(--accent);
-      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+      box-shadow: 0 10px 22px rgba(0,0,0,.24);
+      cursor: pointer;
+      z-index: 4;
     }
 
-    .pin::after {
+    .map-pin::after {
       content: "";
       position: absolute;
-      width: 13px;
-      height: 13px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: white;
-      left: 10px;
-      top: 10px;
+      left: 12px;
+      top: 12px;
     }
 
-    .pin.one {
-      right: 34%;
-      top: 42%;
+    .map-pin.updated {
+      background: var(--blue);
     }
 
-    .pin.two {
-      right: 24%;
-      top: 56%;
-      background: #9ca9ad;
+    .map-pin.stale {
+      background: var(--gray-pin);
+    }
+
+    .map-pin.selected {
+      background: #e05d32;
+      width: 44px;
+      height: 44px;
+      z-index: 5;
+    }
+
+    .map-pin.selected::after {
+      left: 14px;
+      top: 14px;
+    }
+
+    .pin-casa {
+      right: 31%;
+      top: 47%;
+    }
+
+    .pin-pivo {
+      right: 42%;
+      top: 58%;
+    }
+
+    .pin-focaccia {
+      right: 22%;
+      top: 37%;
     }
 
     .legend {
+      position: absolute;
+      left: 24px;
+      bottom: 22px;
+      z-index: 5;
       display: flex;
       gap: 18px;
       flex-wrap: wrap;
-      margin-top: 142px;
       font-size: 14px;
       color: var(--muted);
+      background: rgba(255,253,248,.84);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
     }
 
     .legend span {
@@ -263,35 +350,39 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
+      background: var(--blue);
       display: inline-block;
-      background: var(--accent);
     }
 
     .dot.gray {
-      background: #9ca9ad;
+      background: var(--gray-pin);
     }
 
-    .results {
+    .dot.orange {
+      background: #e05d32;
+    }
+
+    .results-panel {
       padding: 24px;
     }
 
-    .results-header {
+    .results-head {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      gap: 18px;
       align-items: baseline;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
-    .results h2 {
+    .results-head h2 {
       margin: 0;
-      font-size: 26px;
-      letter-spacing: -.04em;
+      font-size: 29px;
+      letter-spacing: -.05em;
     }
 
     .count {
       color: var(--muted);
-      font-weight: 750;
+      font-weight: 800;
     }
 
     .cards {
@@ -302,26 +393,32 @@
     .card {
       background: white;
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 18px;
       display: grid;
       gap: 12px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(27, 20, 14, .08);
     }
 
     .card-top {
       display: flex;
       justify-content: space-between;
-      gap: 18px;
+      gap: 16px;
       align-items: flex-start;
     }
 
     .card h3 {
       margin: 0;
-      font-size: 22px;
+      font-size: 23px;
       letter-spacing: -.03em;
     }
 
-    .municipio {
+    .card .meta {
       margin: 4px 0 0;
       color: var(--muted);
       font-size: 14px;
@@ -330,9 +427,9 @@
     .price {
       background: var(--brown);
       color: white;
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 9px 12px;
-      font-weight: 900;
+      font-weight: 950;
       white-space: nowrap;
     }
 
@@ -352,22 +449,25 @@
       border-radius: 999px;
       padding: 6px 10px;
       background: #edf7fb;
-      color: var(--accent-dark);
+      color: var(--blue-dark);
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 850;
     }
 
-    .card-actions {
+    .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
 
     .link-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
       border-radius: 999px;
       padding: 10px 14px;
-      font-weight: 900;
+      font-weight: 950;
       background: var(--green);
       color: white;
     }
@@ -377,55 +477,73 @@
       padding: 18px;
       border: 1px dashed var(--line);
       border-radius: 18px;
-      background: #fff;
+      background: white;
     }
 
-    footer {
-      background: #1c1c1c;
+    .contact {
+      background: #1d1d1d;
       color: white;
-      padding: 44px 24px;
-      margin-top: 36px;
+      padding: 46px 24px;
     }
 
-    .footer-inner {
-      width: min(1100px, 100%);
+    .contact-inner {
+      width: min(1180px, 100%);
       margin: 0 auto;
-      color: rgba(255,255,255,.78);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
     }
 
-    .footer-inner strong {
-      display: block;
-      color: white;
-      font-size: 30px;
-      margin-bottom: 10px;
+    .contact h2 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      letter-spacing: -.04em;
     }
 
-    @media (max-width: 880px) {
+    .contact p {
+      margin: 0;
+      color: rgba(255,255,255,.75);
+      line-height: 1.55;
+    }
+
+    .legal {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+    }
+
+    @media (max-width: 920px) {
       .hero-inner,
-      .main {
+      .search-layout,
+      .contact-inner {
         grid-template-columns: 1fr;
       }
 
       .hero-inner {
+        display: flex;
         flex-direction: column;
       }
 
-      .restaurant-access {
-        align-self: flex-start;
+      .search-panel {
+        position: static;
       }
 
-      .main {
-        margin-top: -36px;
+      .legal {
+        justify-content: flex-start;
       }
     }
   </style>
 </head>
 
 <body>
-  <header class="hero">
+  <header class="village-hero">
     <div class="hero-inner">
       <div class="brand">
-        <div class="brand-mark">🍴</div>
+        <div class="logo">🍴</div>
         <div>
           <h1>Busca menú</h1>
           <p>Hoyo de Manzanares</p>
@@ -438,78 +556,85 @@
     </div>
   </header>
 
-  <main class="main">
-    <aside class="panel">
-      <h2>Buscar menú</h2>
+  <main class="page">
+    <section class="search-layout">
+      <aside class="search-panel">
+        <h2>Busca tu menú</h2>
 
-      <div class="field">
-        <label for="restaurantSearch">Buscar por restaurante</label>
-        <input id="restaurantSearch" type="text" placeholder="Casa Pepe, Pivo, La Lola...">
-      </div>
+        <div class="field">
+          <label for="restaurantSearch">Buscar por restaurante</label>
+          <input id="restaurantSearch" type="text" placeholder="Casa Pepe, Pivo, Focaccia...">
+        </div>
 
-      <div class="field">
-        <label for="plateSearch">Buscar por plato</label>
-        <input id="plateSearch" type="text" placeholder="pollo, paella, lentejas...">
-      </div>
+        <div class="field">
+          <label for="plateSearch">Buscar por plato</label>
+          <input id="plateSearch" type="text" placeholder="pollo, salmón, burrata...">
+        </div>
 
-      <div class="field">
-        <label for="maxPrice">Precio hasta</label>
-        <input id="maxPrice" type="number" min="0" step="0.5" placeholder="12">
-      </div>
+        <div class="field">
+          <label for="maxPrice">Precio hasta</label>
+          <input id="maxPrice" type="number" min="0" step="0.5" placeholder="12">
+        </div>
 
-      <div class="checks">
-        <label>
-          <input id="takeaway" type="checkbox">
-          Para pasar a recoger
-        </label>
+        <button class="button" id="searchButton">BUSCAR</button>
 
-        <label>
-          <input id="discount" type="checkbox">
-          Con descuento exclusivo Buscamenú
-        </label>
-
-        <label>
-          <input id="hasMenu" type="checkbox">
-          También disponible carta
-        </label>
-      </div>
-
-      <button class="button" id="searchButton">BUSCAR</button>
-    </aside>
-
-    <section>
-      <div class="map-box">
-        <h2>Mapa de menús de hoy</h2>
-        <p>
-          Esta primera versión usa datos estáticos. El siguiente paso será situar cada marcador
-          con latitud y longitud reales guardadas en Airtable.
+        <p class="hint">
+          Demo de laboratorio. Busca por plato, restaurante o precio máximo.
         </p>
+      </aside>
 
-        <div class="pin one" title="Menú actualizado"></div>
-        <div class="pin two" title="Menú sin actualizar"></div>
+      <section>
+        <div class="map-panel">
+          <div class="fake-road road-1"></div>
+          <div class="fake-road road-2"></div>
+          <div class="fake-road road-3"></div>
 
-        <div class="legend">
-          <span><i class="dot"></i> Menú actualizado</span>
-          <span><i class="dot gray"></i> Menú sin actualizar</span>
+          <div class="map-info">
+            <h2>Mapa de menús de hoy</h2>
+            <p>
+              De momento es un mapa visual de prueba. Más adelante cada pin usará
+              latitud y longitud verificadas en Airtable.
+            </p>
+          </div>
+
+          <div class="map-pin selected pin-casa" title="Casa Pepe Demo"></div>
+          <div class="map-pin updated pin-pivo" title="Pivo Demo"></div>
+          <div class="map-pin updated pin-focaccia" title="Focaccia Demo"></div>
+
+          <div class="legend">
+            <span><i class="dot"></i> Menú actualizado</span>
+            <span><i class="dot gray"></i> Menú sin actualizar</span>
+            <span><i class="dot orange"></i> Seleccionado</span>
+          </div>
         </div>
-      </div>
 
-      <div class="results">
-        <div class="results-header">
-          <h2>Resultados</h2>
-          <div class="count" id="count">Cargando...</div>
+        <div class="results-panel">
+          <div class="results-head">
+            <h2>Resultados</h2>
+            <div class="count" id="count">Cargando...</div>
+          </div>
+
+          <div class="cards" id="results"></div>
         </div>
-
-        <div class="cards" id="results"></div>
-      </div>
+      </section>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-inner">
-      <strong>Contáctanos</strong>
-      <p>Demo inicial del buscador público de Buscamenú.</p>
-      <p>Más adelante aquí irá el formulario real, enlaces legales y acceso para restaurantes.</p>
+  <footer class="contact">
+    <div class="contact-inner">
+      <div>
+        <h2>Contáctanos</h2>
+        <p>
+          Esta zona recogerá el formulario de contacto, información para restaurantes
+          y enlaces legales de Buscamenú.
+        </p>
+      </div>
+
+      <nav class="legal">
+        <span>Aviso legal</span>
+        <span>Privacidad</span>
+        <span>Contacto restaurantes</span>
+      </nav>
     </div>
   </footer>
 
@@ -519,9 +644,6 @@
     const restaurantInput = document.getElementById("restaurantSearch");
     const plateInput = document.getElementById("plateSearch");
     const maxPriceInput = document.getElementById("maxPrice");
-    const takeawayInput = document.getElementById("takeaway");
-    const discountInput = document.getElementById("discount");
-    const hasMenuInput = document.getElementById("hasMenu");
     const button = document.getElementById("searchButton");
     const results = document.getElementById("results");
     const count = document.getElementById("count");
@@ -537,14 +659,19 @@
       const query = normalize(fieldValue);
       if (!query) return true;
 
-      const haystack = fields
-        .map(field => {
-          const value = item[field];
-          return Array.isArray(value) ? value.join(" ") : value;
-        })
-        .join(" ");
+      const haystack = fields.map(field => {
+        const value = item[field];
+        return Array.isArray(value) ? value.join(" ") : value;
+      }).join(" ");
 
       return normalize(haystack).includes(query);
+    }
+
+    function formatPrice(item) {
+      if (item.precio_desde === item.precio_hasta) {
+        return `${item.precio_desde} €`;
+      }
+      return `${item.precio_desde}–${item.precio_hasta} €`;
     }
 
     function render(items) {
@@ -555,7 +682,8 @@
       if (!items.length) {
         results.innerHTML = `
           <div class="empty">
-            No hay menús que coincidan con esta búsqueda. Prueba con otro plato, restaurante o precio.
+            No hay menús que coincidan con esta búsqueda.
+            Prueba con otro plato, restaurante o precio.
           </div>
         `;
         return;
@@ -564,18 +692,15 @@
       results.innerHTML = items.map(item => {
         const platos = Array.isArray(item.platos) ? item.platos.join(", ") : "";
         const etiquetas = Array.isArray(item.etiquetas) ? item.etiquetas : [];
-        const precio = item.precio_desde === item.precio_hasta
-          ? `${item.precio_desde} €`
-          : `${item.precio_desde}–${item.precio_hasta} €`;
 
         return `
           <article class="card">
             <div class="card-top">
               <div>
                 <h3>${item.restaurante}</h3>
-                <p class="municipio">${item.municipio} · ${item.titulo_menu || "Menú del día"}</p>
+                <p class="meta">${item.municipio} · ${item.titulo_menu || "Menú del día"}</p>
               </div>
-              <div class="price">${precio}</div>
+              <div class="price">${formatPrice(item)}</div>
             </div>
 
             <p class="plates">${platos}</p>
@@ -584,7 +709,7 @@
               ${etiquetas.map(tag => `<span class="tag">${tag.replaceAll("_", " ")}</span>`).join("")}
             </div>
 
-            <div class="card-actions">
+            <div class="actions">
               <a class="link-button" href="${item.url}">Ver menú</a>
             </div>
           </article>
@@ -599,11 +724,8 @@
         const restaurantOk = matchesText(item, restaurantInput.value, ["restaurante", "municipio", "slug"]);
         const plateOk = matchesText(item, plateInput.value, ["platos", "keywords", "etiquetas"]);
         const priceOk = !maxPriceInput.value || Number(item.precio_desde || 0) <= maxPrice;
-        const takeawayOk = !takeawayInput.checked || item.para_recoger === true;
-        const discountOk = !discountInput.checked || item.descuento_buscamenu === true;
-        const hasMenuOk = !hasMenuInput.checked || item.tiene_carta === true;
 
-        return restaurantOk && plateOk && priceOk && takeawayOk && discountOk && hasMenuOk;
+        return restaurantOk && plateOk && priceOk;
       });
 
       render(filtered);
@@ -611,7 +733,7 @@
 
     async function loadMenus() {
       try {
-        const response = await fetch("/data/busqueda-menus-hoy.json", { cache: "no-store" });
+        const response = await fetch("../data/busqueda-menus-hoy.json", { cache: "no-store" });
         if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
 
         menus = await response.json();
@@ -620,8 +742,8 @@
         count.textContent = "Error";
         results.innerHTML = `
           <div class="empty">
-            No se pudo cargar el archivo de búsqueda. Revisa que exista
-            <strong>/data/busqueda-menus-hoy.json</strong>.
+            No se pudo cargar el archivo de búsqueda.
+            Revisa que exista <strong>data/busqueda-menus-hoy.json</strong>.
           </div>
         `;
       }
@@ -631,12 +753,8 @@
     restaurantInput.addEventListener("input", filterMenus);
     plateInput.addEventListener("input", filterMenus);
     maxPriceInput.addEventListener("input", filterMenus);
-    takeawayInput.addEventListener("change", filterMenus);
-    discountInput.addEventListener("change", filterMenus);
-    hasMenuInput.addEventListener("change", filterMenus);
 
     loadMenus();
   </script>
 </body>
 </html>
-```

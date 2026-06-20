@@ -35,10 +35,86 @@
       "menu_del_dia",
       "carne",
       "pescado"
+    ]
+  },
+  {
+    "restaurante": "Pivo Demo",
+    "slug": "pivo-demo",
+    "municipio": "Hoyo de Manzanares",
+    "url": "/restaurantes/pivo-demo/",
+    "fecha_menu": "2026-06-19",
+    "estado_menu": "actualizado",
+    "lat": 40.62218,
+    "lng": -3.90842,
+    "titulo_menu": "Menú fin de semana",
+    "precio_desde": 15,
+    "precio_hasta": 20,
+    "platos": [
+      "garbanzos con callos",
+      "ensalada de tomate con queso y atún",
+      "revuelto de trigueros",
+      "salmón a la plancha",
+      "escalopines de ternera al roquefort",
+      "arroz con leche"
     ],
-    "para_recoger": true,
-    "descuento_buscamenu": false,
-    "tiene_carta": true,
-    "url_carta": null
+    "keywords": [
+      "garbanzos",
+      "callos",
+      "ensalada",
+      "tomate",
+      "queso",
+      "atún",
+      "atun",
+      "trigueros",
+      "salmón",
+      "salmon",
+      "pescado",
+      "ternera",
+      "carne",
+      "roquefort",
+      "arroz con leche",
+      "menú fin de semana",
+      "menu fin de semana"
+    ],
+    "etiquetas": [
+      "menu_fin_de_semana",
+      "pescado",
+      "carne",
+      "precio_variable"
+    ]
+  },
+  {
+    "restaurante": "Focaccia Demo",
+    "slug": "focaccia-demo",
+    "municipio": "Hoyo de Manzanares",
+    "url": "/restaurantes/focaccia-demo/",
+    "fecha_menu": "2026-06-19",
+    "estado_menu": "actualizado",
+    "lat": 40.62302,
+    "lng": -3.90721,
+    "titulo_menu": "Plato destacado",
+    "precio_desde": 9.5,
+    "precio_hasta": 9.5,
+    "platos": [
+      "focaccia de burrata",
+      "pesto",
+      "rúcula",
+      "mortadela"
+    ],
+    "keywords": [
+      "focaccia",
+      "burrata",
+      "pesto",
+      "rúcula",
+      "rucula",
+      "mortadela",
+      "plato destacado",
+      "italiano",
+      "bocadillo"
+    ],
+    "etiquetas": [
+      "plato_destacado",
+      "italiano"
+    ]
   }
 ]
