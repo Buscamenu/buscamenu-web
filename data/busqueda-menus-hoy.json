@@ -73,9 +73,9 @@
   },
   {
     "restaurante": "Pivo Demo",
-    "slug": "pivo-generado",
+    "slug": "pivo-demo",
     "municipio": "Hoyo de Manzanares",
-    "url": "/restaurantes/pivo-generado/",
+    "url": "/restaurantes/pivo-demo/",
     "fecha_menu": "2026-06-21",
     "estado_menu": "listo_para_publicar",
     "lat": 40.6235,
@@ -109,9 +109,9 @@
   },
   {
     "restaurante": "Pivo Demo",
-    "slug": "pivo-generado",
+    "slug": "pivo-demo",
     "municipio": "Hoyo de Manzanares",
-    "url": "/restaurantes/pivo-generado/",
+    "url": "/restaurantes/pivo-demo/",
     "fecha_menu": "2026-06-21",
     "estado_menu": "listo_para_publicar",
     "lat": 40.6235,
