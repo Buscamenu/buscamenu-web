@@ -26,17 +26,64 @@
     const state={menus:[],filtered:[]};
     const els={form:document.getElementById('searchForm'),restaurant:document.getElementById('restaurantInput'),dish:document.getElementById('dishInput'),price:document.getElementById('priceInput'),updatedOnly:document.getElementById('updatedOnly'),withDrink:document.getElementById('withDrink'),withBread:document.getElementById('withBread'),clear:document.getElementById('clearButton'),summary:document.getElementById('summary'),results:document.getElementById('results')};
     function normalise(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
-    function extractDishes(m){if(Array.isArray(m.platos))return m.platos.filter(Boolean);const d=[];['primeros','segundos','postres'].forEach(k=>{if(Array.isArray(m[k]))d.push(...m[k])});return d.filter(Boolean)}
+    function extractDishes(m){if(Array.isArray(m.platos))return m.platos.filter(Boolean);const d=[];['primeros','segundos','postre','postres'].forEach(k=>{if(Array.isArray(m[k]))d.push(...m[k])});return d.filter(Boolean)}
     function name(m){return m.restaurante||m.nombre||'Restaurante'}
     function url(m){return m.url||(m.slug?`../restaurantes/${m.slug}/`:'#')}
     function priceText(m){const d=m.precio_desde,h=m.precio_hasta;if(d&&h&&d!==h)return `${d}–${h} €`;if(h)return `${h} €`;if(d)return `${d} €`;return 'Precio no indicado'}
     function today(v){if(!v)return false;const t=new Date(),y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');return String(v).slice(0,10)===`${y}-${m}-${d}`}
-    function text(m){return normalise([name(m),m.titulo_menu,m.municipio,m.categoria,...(m.keywords||[]),...(m.etiquetas||[]),...extractDishes(m)].join(' '))}
-    function apply(){const r=normalise(els.restaurant.value),dish=normalise(els.dish.value),max=Number(els.price.value||0);state.filtered=state.menus.filter(m=>{const n=normalise(name(m)),tx=text(m),p=Number(m.precio_hasta||m.precio_desde||0);if(r&&!n.includes(r))return false;if(dish&&!tx.includes(dish))return false;if(max&&p&&p>max)return false;if(els.updatedOnly.checked&&!today(m.fecha_menu))return false;if(els.withDrink.checked&&m.bebida_incluida===false)return false;if(els.withBread.checked&&m.pan_incluido===false)return false;return true});render()}
+    function text(m){return normalise([name(m),m.titulo_menu,m.municipio,m.categoria,...(m.keywords||[]),...(m.etiquetas||[]),...(m.incluye||[]),...extractDishes(m)].join(' '))}
+    function apply(){const r=normalise(els.restaurant.value),dish=normalise(els.dish.value),max=Number(els.price.value||0);state.filtered=state.menus.filter(m=>{const n=normalise(name(m)),tx=text(m),p=Number(m.precio_hasta||m.precio_desde||0);if(r&&!n.includes(r))return false;if(dish&&!tx.includes(dish))return false;if(max&&p&&p>max)return false;if(els.updatedOnly.checked&&!today(m.fecha_menu))return false;if(els.withDrink.checked&&!m.bebida_incluida)return false;if(els.withBread.checked&&!m.pan_incluido)return false;return true});render()}
     function esc(v){return String(v||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
-    function render(){const c=state.filtered.length;els.summary.textContent=c===1?'1 menú encontrado':`${c} menús encontrados`;if(!c){els.results.innerHTML='<div class="empty">No hay resultados con esos criterios. Prueba a cambiar plato, restaurante o precio máximo.</div>';return}els.results.innerHTML=state.filtered.map(m=>{const dishes=extractDishes(m).slice(0,4);const lis=dishes.length?dishes.map(d=>`<li>${esc(d)}</li>`).join(''):'<li>Menú del día disponible</li>';return `<article class="card"><h3>${esc(name(m))}</h3><div class="meta">${esc(m.municipio||'Municipio demo')} · ${esc(m.titulo_menu||'Menú del día')}</div><div class="price">${esc(priceText(m))}</div><ul class="dishes">${lis}</ul><a class="detail" href="${esc(url(m))}">Ver detalle</a></article>`}).join('')}
-    async function load(){try{const res=await fetch('../data/busqueda-menus-hoy.json',{cache:'no-store'});if(!res.ok)throw new Error('No se pudo cargar el JSON');const data=await res.json();state.menus=Array.isArray(data)?data:(data.menus||data.resultados||[]);state.filtered=[...state.menus];render()}catch(e){els.summary.textContent='No se pudieron cargar los menús';els.results.innerHTML='<div class="empty">Revisa que exista el archivo <strong>data/busqueda-menus-hoy.json</strong>.</div>';console.error(e)}}
-    els.form.addEventListener('submit',e=>{e.preventDefault();apply()});[els.restaurant,els.dish,els.price,els.updatedOnly,els.withDrink,els.withBread].forEach(el=>{el.addEventListener('input',apply);el.addEventListener('change',apply)});els.clear.addEventListener('click',()=>{els.restaurant.value='';els.dish.value='';els.price.value='';els.updatedOnly.checked=false;els.withDrink.checked=false;els.withBread.checked=false;apply()});load();
+    function render(){const c=state.filtered.length;els.summary.textContent=c===1?'1 menú encontrado':`${c} menús encontrados`;if(!c){els.results.innerHTML='<div class="empty">No hay resultados con esos criterios. Prueba a cambiar plato, restaurante o precio máximo.</div>';return}els.results.innerHTML=state.filtered.map(m=>{const dishes=extractDishes(m).slice(0,5);const lis=dishes.length?dishes.map(d=>`<li>${esc(d)}</li>`).join(''):'<li>Menú del día disponible</li>';return `<article class="card"><h3>${esc(name(m))}</h3><div class="meta">${esc(m.municipio||'Municipio demo')} · ${esc(m.titulo_menu||'Menú del día')}</div><div class="price">${esc(priceText(m))}</div><ul class="dishes">${lis}</ul><a class="detail" href="${esc(url(m))}">Ver detalle</a></article>`}).join('')}
+
+    async function load(){
+      try{
+        const res=await fetch('../data/menus-hoy/san-lorenzo-de-el-escorial.json',{cache:'no-store'});
+        if(!res.ok)throw new Error('No se pudo cargar el JSON');
+        const data=await res.json();
+        const localidad=data.localidad||{};
+        state.menus=(data.menus||[]).map(item=>{
+          const r=item.restaurante||{};
+          const m=item.menu||{};
+          const primeros=Array.isArray(m.primeros)?m.primeros:[];
+          const segundos=Array.isArray(m.segundos)?m.segundos:[];
+          const postre=Array.isArray(m.postre)?m.postre:[];
+          const incluye=Array.isArray(m.incluye)?m.incluye:[];
+          const incluyeTexto=incluye.map(x=>normalise(x));
+          return {
+            restaurante:r.nombre||'Restaurante',
+            nombre:r.nombre||'Restaurante',
+            slug:r.slug||'',
+            url:r.url_publica||(r.slug?`../restaurantes/${r.slug}/`:'#'),
+            municipio:localidad.nombre||'',
+            categoria:r.categoria_cocina||'',
+            titulo_menu:m.titulo||'Menú del día',
+            fecha_menu:data.fecha||'',
+            precio_desde:m.precio_desde,
+            precio_hasta:m.precio_hasta,
+            platos:[...primeros,...segundos,...postre],
+            primeros:primeros,
+            segundos:segundos,
+            postre:postre,
+            incluye:incluye,
+            etiquetas:Array.isArray(m.etiquetas)?m.etiquetas:[],
+            bebida_incluida:incluyeTexto.includes('bebida'),
+            pan_incluido:incluyeTexto.includes('pan')
+          };
+        });
+        state.filtered=[...state.menus];
+        render();
+      }catch(e){
+        els.summary.textContent='No se pudieron cargar los menús';
+        els.results.innerHTML='<div class="empty">Revisa que exista el archivo <strong>data/menus-hoy/san-lorenzo-de-el-escorial.json</strong>.</div>';
+        console.error(e);
+      }
+    }
+
+    els.form.addEventListener('submit',e=>{e.preventDefault();apply()});
+    [els.restaurant,els.dish,els.price,els.updatedOnly,els.withDrink,els.withBread].forEach(el=>{el.addEventListener('input',apply);el.addEventListener('change',apply)});
+    els.clear.addEventListener('click',()=>{els.restaurant.value='';els.dish.value='';els.price.value='';els.updatedOnly.checked=false;els.withDrink.checked=false;els.withBread.checked=false;apply()});
+    load();
   </script>
 </body>
 </html>
