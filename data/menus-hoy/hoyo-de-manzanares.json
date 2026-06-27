@@ -1,0 +1,568 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pivo Demo · Buscamenú</title>
+  <meta name="description" content="Pivo Demo, menú del día en Hoyo de Manzanares.">
+
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --card: #fffaf2;
+      --ink: #2f241b;
+      --muted: #7a685a;
+      --line: #e4d5c4;
+      --accent: #b06f32;
+      --accent-dark: #714219;
+      --green: #2f7d46;
+      --shadow: 0 18px 50px rgba(64, 43, 24, .12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(176,111,50,.16), transparent 32rem),
+        linear-gradient(180deg, #fff7eb 0%, var(--bg) 45%, #efe3d3 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 24px rgba(176,111,50,.25);
+    }
+
+    .crumb {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-card,
+    .image-card,
+    .info-card,
+    .menu-card,
+    .history-card {
+      background: rgba(255,250,242,.86);
+      border: 1px solid rgba(228,213,196,.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: clamp(24px, 4vw, 44px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 360px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f2e1cd;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 76px);
+      line-height: .92;
+      letter-spacing: -.07em;
+      margin: 0 0 18px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.45;
+      max-width: 720px;
+      margin: 0;
+    }
+
+    .status {
+      margin-top: 28px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #e9f5eb;
+      color: #235d34;
+      display: inline-flex;
+      width: fit-content;
+      gap: 10px;
+      align-items: center;
+      font-weight: 750;
+    }
+
+    .image-card {
+      padding: 18px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+    }
+
+    .generic-image {
+      flex: 1;
+      border-radius: 20px;
+      border: 1px dashed #d1b99e;
+      background:
+        linear-gradient(135deg, rgba(176,111,50,.22), rgba(255,255,255,.35)),
+        repeating-linear-gradient(45deg, rgba(176,111,50,.08) 0 14px, rgba(255,255,255,.18) 14px 28px);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 28px;
+      min-height: 300px;
+    }
+
+    .generic-image .icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 24px;
+      background: var(--accent);
+      color: white;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 16px;
+      font-size: 34px;
+      box-shadow: 0 14px 30px rgba(176,111,50,.25);
+    }
+
+    .generic-image h2 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      letter-spacing: -.04em;
+    }
+
+    .generic-image p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .restaurant-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .info-card,
+    .menu-card,
+    .history-card {
+      padding: 24px;
+    }
+
+    .info-card h2,
+    .history-card h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+      letter-spacing: -.03em;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 12px;
+      margin: 0 0 22px;
+    }
+
+    .detail {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    .detail span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .detail strong {
+      font-size: 16px;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      text-decoration: none;
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .button.primary {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .button.accent {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .menu-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .menu-dia h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing: -.05em;
+    }
+
+    .price {
+      flex: 0 0 auto;
+      font-size: 30px;
+      font-weight: 900;
+      color: white;
+      background: var(--accent-dark);
+      border-radius: 18px;
+      padding: 12px 16px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .menu-section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .menu-section h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+    }
+
+    .menu-section ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.75;
+    }
+
+    .included,
+    .notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f2e1cd;
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
+    .history-card {
+      margin-top: 24px;
+    }
+
+    .history-items {
+      display: grid;
+      gap: 10px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 32px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 840px) {
+      .hero,
+      .content,
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card,
+      .image-card {
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">🍽️</div>
+        <div>Buscamenú</div>
+      </div>
+      <div class="crumb">Ficha de restaurante · Hoyo de Manzanares</div>
+    </header>
+
+    <section class="hero">
+      <article class="hero-card">
+        <div>
+          <div class="badge-row">
+            <span class="badge">📍 Hoyo de Manzanares</span>
+            <span class="badge">🍲 bar restaurante</span>
+            <span class="badge">Menú actualizado</span>
+          </div>
+
+          <h1>Pivo Demo</h1>
+
+          <p class="subtitle">
+            Restaurante demo con menú variado y platos de temporada.
+          </p>
+        </div>
+
+        <div class="status">Menú del día disponible</div>
+      </article>
+
+      <aside class="image-card">
+        <div class="generic-image">
+  <div>
+    <div class="icon">🍽️</div>
+    <h2>Pivo Demo</h2>
+    <p>Imagen genérica Buscamenú</p>
+  </div>
+</div>
+      </aside>
+    </section>
+
+    <section class="content">
+      <aside class="info-card">
+        <h2>Datos del restaurante</h2>
+
+        <div class="detail-list">
+          <div class="detail">
+            <span>Dirección</span>
+            <strong>Avenida de la Paloma, 12</strong>
+          </div>
+
+          <div class="detail">
+            <span>Municipio</span>
+            <strong>Hoyo de Manzanares</strong>
+          </div>
+
+          <div class="detail">
+            <span>Teléfono público</span>
+            <strong>910 000 002</strong>
+          </div>
+
+          <div class="detail">
+            <span>Identificador público</span>
+            <strong>pivo-demo</strong>
+          </div>
+        </div>
+
+        <nav class="actions" aria-label="Acciones del restaurante">
+          <a class="button primary" href="https://wa.me/34600000002">Escribir por WhatsApp</a>
+          <a class="button " href="tel:910000002">Llamar</a>
+          <a class="button " href="https://maps.google.com/?q=Avenida+de+la+Paloma+12+Hoyo+de+Manzanares">Ver en Google Maps</a>
+          
+        </nav>
+      </aside>
+
+      <article class="menu-card">
+        <section class="menu-dia">
+  <div class="menu-title-row">
+    <div>
+      <p class="eyebrow">Menú de hoy</p>
+      <h2>Menú del día</h2>
+    </div>
+    <div class="price">14 €</div>
+  </div>
+
+  <div class="menu-grid">
+    <section class="menu-section">
+      <h3>Primeros</h3>
+      <ul>
+        <li>Salmorejo</li>
+        <li>Arroz de verduras</li>
+        <li>Ensalada de tomate</li>
+      </ul>
+    </section>
+
+    <section class="menu-section">
+      <h3>Segundos</h3>
+      <ul>
+        <li>Hamburguesa casera</li>
+        <li>Pollo al ajillo</li>
+      </ul>
+    </section>
+
+    <section class="menu-section">
+      <h3>Postres</h3>
+      <ul>
+        <li>Yogur</li>
+        <li>Fruta de temporada</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="included">Incluye pan, bebida.</div>
+</section>
+
+<section class="menu-dia">
+  <div class="menu-title-row">
+    <div>
+      <p class="eyebrow">Menú de hoy</p>
+      <h2>Menú ejecutivo</h2>
+    </div>
+    <div class="price">16 €</div>
+  </div>
+
+  <div class="menu-grid">
+    <section class="menu-section">
+      <h3>Primeros</h3>
+      <ul>
+        <li>Ensalada templada</li>
+        <li>Crema de verduras</li>
+      </ul>
+    </section>
+
+    <section class="menu-section">
+      <h3>Segundos</h3>
+      <ul>
+        <li>Salmón a la plancha</li>
+        <li>Secreto ibérico</li>
+      </ul>
+    </section>
+
+    <section class="menu-section">
+      <h3>Postres</h3>
+      <ul>
+        <li>Tarta de queso</li>
+        <li>Café</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="included">Incluye pan, bebida, café.</div>
+</section>
+      </article>
+    </section>
+
+    <section class="history-card">
+      <h2>Histórico / carrusel de menús</h2>
+
+      <div class="history-items">
+        <div class="history-item">
+  <span>Histórico pendiente</span>
+  <strong>Próximamente</strong>
+</div>
+      </div>
+    </section>
+
+    <footer>
+      Buscamenú · Ficha generada automáticamente desde datos de restaurante y menú.
+    </footer>
+  </main>
+</body>
+</html>
