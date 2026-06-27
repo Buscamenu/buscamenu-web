@@ -1,208 +1,208 @@
 {
-“localidad”: {
-“nombre”: “Hoyo de Manzanares”,
-“slug”: “hoyo-de-manzanares”
-},
-“fecha”: “2026-06-27”,
-“ultima_actualizacion”: “2026-06-27T21:10:00”,
-“menus”: [
-{
-“restaurante”: {
-“nombre”: “Casa Pepe Demo”,
-“slug”: “casa-pepe-demo”,
-“direccion”: “Plaza Mayor, 1”,
-“telefono_publico”: “910000000”,
-“categoria_cocina”: “Cocina casera”,
-“url_publica”: “/restaurantes/casa-pepe-demo/”
-},
-“menu”: {
-“id”: “casa-pepe-demo_2026-06-27”,
-“titulo”: “Menú del día”,
-“estado”: “publicado”,
-“precio_desde”: 12,
-“precio_hasta”: 12,
-“tiene_menu_hoy”: true,
-“tipo”: “simple”,
-“primeros”: [
-“Lentejas”,
-“Ensalada”
-],
-“segundos”: [
-“Pollo al ajillo”,
-“Merluza”
-],
-“postre”: [
-“Postre o café”
-],
-“incluye”: [
-“Postre o café”
-],
-“platos”: [
-“Lentejas”,
-“Ensalada”,
-“Pollo al ajillo”,
-“Merluza”,
-“Postre o café”
-],
-“etiquetas”: [
-“menu del dia”,
-“cocina casera”,
-“lentejas”,
-“ensalada”,
-“pollo”,
-“merluza”,
-“postre o cafe”
-]
-}
-},
-{
-“restaurante”: {
-“nombre”: “Focaccia Demo”,
-“slug”: “focaccia-demo”,
-“direccion”: “Centro de Hoyo de Manzanares”,
-“telefono_publico”: “910000002”,
-“categoria_cocina”: “Plato destacado”,
-“url_publica”: “/restaurantes/focaccia-demo/”
-},
-“menu”: {
-“id”: “focaccia-demo_2026-06-27”,
-“titulo”: “Plato destacado”,
-“estado”: “publicado”,
-“precio_desde”: 9.5,
-“precio_hasta”: 9.5,
-“tiene_menu_hoy”: true,
-“tipo”: “plato_destacado”,
-“primeros”: [],
-“segundos”: [],
-“postre”: [],
-“incluye”: [],
-“platos”: [
-“Focaccia de burrata”
-],
-“descripcion”: “Focaccia con burrata, pesto, rúcula y mortadela.”,
-“etiquetas”: [
-“plato destacado”,
-“focaccia”,
-“burrata”,
-“pesto”,
-“rucula”,
-“mortadela”,
-“menos de 10 euros”
-]
-}
-},
-{
-“restaurante”: {
-“nombre”: “Pivo Demo”,
-“slug”: “pivo-demo”,
-“direccion”: “Avenida de la Paloma, 12”,
-“telefono_publico”: “910000002”,
-“categoria_cocina”: “Bar restaurante”,
-“url_publica”: “/restaurantes/pivo-demo/”
-},
-“menu”: {
-“id”: “pivo-demo_2026-06-27”,
-“titulo”: “Menús del día”,
-“estado”: “publicado”,
-“precio_desde”: 14,
-“precio_hasta”: 16,
-“tiene_menu_hoy”: true,
-“tipo”: “multiple”,
-“menus”: [
-{
-“nombre”: “Menú del día”,
-“precio”: “14 €”,
-“primeros”: [
-“Salmorejo”,
-“Arroz de verduras”,
-“Ensalada de tomate”
-],
-“segundos”: [
-“Hamburguesa casera”,
-“Pollo al ajillo”
-],
-“postre”: [
-“Yogur”,
-“Fruta de temporada”
-],
-“incluye”: [
-“Pan”,
-“Bebida”
-]
-},
-{
-“nombre”: “Menú ejecutivo”,
-“precio”: “16 €”,
-“primeros”: [
-“Ensalada templada”,
-“Crema de verduras”
-],
-“segundos”: [
-“Salmón a la plancha”,
-“Secreto ibérico”
-],
-“postre”: [
-“Tarta de queso”,
-“Café”
-],
-“incluye”: [
-“Pan”,
-“Bebida”,
-“Café”
-]
-}
-],
-“primeros”: [
-“Salmorejo”,
-“Arroz de verduras”,
-“Ensalada de tomate”,
-“Ensalada templada”,
-“Crema de verduras”
-],
-“segundos”: [
-“Hamburguesa casera”,
-“Pollo al ajillo”,
-“Salmón a la plancha”,
-“Secreto ibérico”
-],
-“postre”: [
-“Yogur”,
-“Fruta de temporada”,
-“Tarta de queso”,
-“Café”
-],
-“incluye”: [
-“Pan”,
-“Bebida”,
-“Café”
-],
-“platos”: [
-“Salmorejo”,
-“Arroz de verduras”,
-“Ensalada de tomate”,
-“Hamburguesa casera”,
-“Pollo al ajillo”,
-“Yogur”,
-“Fruta de temporada”,
-“Ensalada templada”,
-“Crema de verduras”,
-“Salmón a la plancha”,
-“Secreto ibérico”,
-“Tarta de queso”,
-“Café”
-],
-“etiquetas”: [
-“menu del dia”,
-“menu ejecutivo”,
-“bar restaurante”,
-“salmorejo”,
-“hamburguesa”,
-“pollo”,
-“salmon”,
-“secreto iberico”,
-“tarta de queso”
-]
-}
-}
-]
+  "localidad": {
+    "nombre": "Hoyo de Manzanares",
+    "slug": "hoyo-de-manzanares"
+  },
+  "fecha": "2026-06-27",
+  "ultima_actualizacion": "2026-06-27T21:10:00",
+  "menus": [
+    {
+      "restaurante": {
+        "nombre": "Casa Pepe Demo",
+        "slug": "casa-pepe-demo",
+        "direccion": "Plaza Mayor, 1",
+        "telefono_publico": "910000000",
+        "categoria_cocina": "Cocina casera",
+        "url_publica": "/restaurantes/casa-pepe-demo/"
+      },
+      "menu": {
+        "id": "casa-pepe-demo_2026-06-27",
+        "titulo": "Menú del día",
+        "estado": "publicado",
+        "precio_desde": 12,
+        "precio_hasta": 12,
+        "tiene_menu_hoy": true,
+        "tipo": "simple",
+        "primeros": [
+          "Lentejas",
+          "Ensalada"
+        ],
+        "segundos": [
+          "Pollo al ajillo",
+          "Merluza"
+        ],
+        "postre": [
+          "Postre o café"
+        ],
+        "incluye": [
+          "Postre o café"
+        ],
+        "platos": [
+          "Lentejas",
+          "Ensalada",
+          "Pollo al ajillo",
+          "Merluza",
+          "Postre o café"
+        ],
+        "etiquetas": [
+          "menu del dia",
+          "cocina casera",
+          "lentejas",
+          "ensalada",
+          "pollo",
+          "merluza",
+          "postre o cafe"
+        ]
+      }
+    },
+    {
+      "restaurante": {
+        "nombre": "Focaccia Demo",
+        "slug": "focaccia-demo",
+        "direccion": "Centro de Hoyo de Manzanares",
+        "telefono_publico": "910000002",
+        "categoria_cocina": "Plato destacado",
+        "url_publica": "/restaurantes/focaccia-demo/"
+      },
+      "menu": {
+        "id": "focaccia-demo_2026-06-27",
+        "titulo": "Plato destacado",
+        "estado": "publicado",
+        "precio_desde": 9.5,
+        "precio_hasta": 9.5,
+        "tiene_menu_hoy": true,
+        "tipo": "plato_destacado",
+        "primeros": [],
+        "segundos": [],
+        "postre": [],
+        "incluye": [],
+        "platos": [
+          "Focaccia de burrata"
+        ],
+        "descripcion": "Focaccia con burrata, pesto, rúcula y mortadela.",
+        "etiquetas": [
+          "plato destacado",
+          "focaccia",
+          "burrata",
+          "pesto",
+          "rucula",
+          "mortadela",
+          "menos de 10 euros"
+        ]
+      }
+    },
+    {
+      "restaurante": {
+        "nombre": "Pivo Demo",
+        "slug": "pivo-demo",
+        "direccion": "Avenida de la Paloma, 12",
+        "telefono_publico": "910000002",
+        "categoria_cocina": "Bar restaurante",
+        "url_publica": "/restaurantes/pivo-demo/"
+      },
+      "menu": {
+        "id": "pivo-demo_2026-06-27",
+        "titulo": "Menús del día",
+        "estado": "publicado",
+        "precio_desde": 14,
+        "precio_hasta": 16,
+        "tiene_menu_hoy": true,
+        "tipo": "multiple",
+        "menus": [
+          {
+            "nombre": "Menú del día",
+            "precio": "14 €",
+            "primeros": [
+              "Salmorejo",
+              "Arroz de verduras",
+              "Ensalada de tomate"
+            ],
+            "segundos": [
+              "Hamburguesa casera",
+              "Pollo al ajillo"
+            ],
+            "postre": [
+              "Yogur",
+              "Fruta de temporada"
+            ],
+            "incluye": [
+              "Pan",
+              "Bebida"
+            ]
+          },
+          {
+            "nombre": "Menú ejecutivo",
+            "precio": "16 €",
+            "primeros": [
+              "Ensalada templada",
+              "Crema de verduras"
+            ],
+            "segundos": [
+              "Salmón a la plancha",
+              "Secreto ibérico"
+            ],
+            "postre": [
+              "Tarta de queso",
+              "Café"
+            ],
+            "incluye": [
+              "Pan",
+              "Bebida",
+              "Café"
+            ]
+          }
+        ],
+        "primeros": [
+          "Salmorejo",
+          "Arroz de verduras",
+          "Ensalada de tomate",
+          "Ensalada templada",
+          "Crema de verduras"
+        ],
+        "segundos": [
+          "Hamburguesa casera",
+          "Pollo al ajillo",
+          "Salmón a la plancha",
+          "Secreto ibérico"
+        ],
+        "postre": [
+          "Yogur",
+          "Fruta de temporada",
+          "Tarta de queso",
+          "Café"
+        ],
+        "incluye": [
+          "Pan",
+          "Bebida",
+          "Café"
+        ],
+        "platos": [
+          "Salmorejo",
+          "Arroz de verduras",
+          "Ensalada de tomate",
+          "Hamburguesa casera",
+          "Pollo al ajillo",
+          "Yogur",
+          "Fruta de temporada",
+          "Ensalada templada",
+          "Crema de verduras",
+          "Salmón a la plancha",
+          "Secreto ibérico",
+          "Tarta de queso",
+          "Café"
+        ],
+        "etiquetas": [
+          "menu del dia",
+          "menu ejecutivo",
+          "bar restaurante",
+          "salmorejo",
+          "hamburguesa",
+          "pollo",
+          "salmon",
+          "secreto iberico",
+          "tarta de queso"
+        ]
+      }
+    }
+  ]
 }
