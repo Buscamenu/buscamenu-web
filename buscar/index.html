@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -6,39 +7,226 @@
   <title>Buscamenú · Buscar menús del día</title>
   <style>
     :root{--azul:#35b9dc;--azul2:#1285a7;--texto:#263640;--gris:#637580;--borde:#cde3e7;--sombra:0 18px 45px rgba(29,54,65,.18)}
-    *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--texto);background:#f6faf9}a{text-decoration:none;color:inherit}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--texto);background:#f6faf9}
+    a{text-decoration:none;color:inherit}
     .hero{min-height:260px;display:flex;align-items:center;color:#fff;background:linear-gradient(90deg,rgba(11,31,40,.82),rgba(11,31,40,.28)),linear-gradient(135deg,#263f45,#496b67 45%,#16262d);position:relative;overflow:hidden}
     .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(130deg,transparent 0 35%,rgba(255,255,255,.08) 36% 37%,transparent 38%),linear-gradient(18deg,transparent 0 58%,rgba(255,255,255,.07) 59% 60%,transparent 61%);pointer-events:none}
-    .hero-inner{width:min(1120px,calc(100% - 40px));margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:22px;position:relative;z-index:1}.brand{display:flex;gap:18px;align-items:center}.brand-icon{width:76px;height:76px;border-radius:28px 28px 28px 8px;background:var(--azul);display:grid;place-items:center;font-size:38px;box-shadow:0 18px 35px rgba(0,0,0,.25)}h1{margin:0;font-size:clamp(38px,5vw,62px);letter-spacing:-2.2px;line-height:.95}.brand p{margin:8px 0 0;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.pill{border:1px solid rgba(255,255,255,.72);border-radius:999px;padding:10px 18px;font-size:13px;color:#fff;background:rgba(0,0,0,.12);white-space:nowrap}
-    .map{position:relative;min-height:475px;background:linear-gradient(90deg,rgba(222,249,238,.96),rgba(229,249,241,.84)),repeating-linear-gradient(35deg,transparent 0 90px,rgba(74,180,203,.16) 91px 93px,transparent 94px 170px),repeating-linear-gradient(117deg,transparent 0 120px,rgba(255,255,255,.75) 122px 124px,transparent 125px 220px);border-bottom:1px solid #dde9e9;overflow:hidden}.map:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 22%,rgba(50,183,220,.18) 0 2px,transparent 3px),radial-gradient(circle at 58% 34%,rgba(50,183,220,.22) 0 2px,transparent 3px),radial-gradient(circle at 73% 56%,rgba(92,118,130,.16) 0 2px,transparent 3px)}
-    .map-inner{position:relative;width:min(1120px,calc(100% - 40px));margin:0 auto;padding:58px 0 48px;display:grid;grid-template-columns:340px 1fr;gap:34px;align-items:start}.search{background:#fff;border-radius:4px;box-shadow:var(--sombra);padding:34px 34px 30px;z-index:2}.search h2{margin:0 0 24px;font-size:24px;letter-spacing:-.7px}.field{display:block;width:100%;border:0;border-bottom:2px solid #c7e3e9;padding:13px 0 11px;margin:0 0 8px;font-size:15px;font-style:italic;outline:none;color:var(--texto);background:transparent}.field:focus{border-bottom-color:var(--azul)}.checks{margin:22px 0 28px;display:grid;gap:10px;color:#506069;font-size:13px}.checks label{display:flex;align-items:center;gap:10px}input[type=checkbox]{accent-color:var(--azul)}.btn{border:0;border-radius:999px;padding:12px 30px;background:var(--azul);color:white;font-weight:800;font-size:13px;letter-spacing:.04em;cursor:pointer;box-shadow:0 12px 24px rgba(50,183,220,.28)}.btn2{border:0;background:transparent;color:var(--azul2);font-weight:800;cursor:pointer;margin-left:8px}
-    .summary{display:inline-flex;align-items:center;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:10px 14px;margin:12px 0 18px;color:#40545d;font-size:14px;box-shadow:0 10px 26px rgba(28,66,72,.08)}.results{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:18px}.card{background:rgba(255,255,255,.96);border-radius:18px;box-shadow:0 18px 35px rgba(31,76,84,.14);padding:22px 22px 20px;border:1px solid rgba(255,255,255,.9);position:relative}.card:before{content:"";position:absolute;top:23px;right:22px;width:16px;height:16px;border-radius:50%;background:var(--azul);box-shadow:0 0 0 6px rgba(50,183,220,.15)}.card h3{margin:0 28px 5px 0;font-size:19px;line-height:1.1;letter-spacing:-.4px}.meta{color:var(--gris);font-size:13px;margin-bottom:13px}.price{display:inline-block;background:#eefbf5;border:1px solid #d6efe6;color:#0f6f7e;border-radius:999px;padding:7px 11px;font-weight:800;font-size:13px;margin-bottom:13px}.dishes{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:6px;color:#3b4c54;font-size:14px;line-height:1.35}.dishes li:before{content:"•";color:var(--azul);font-weight:900;margin-right:8px}.detail{display:inline-flex;color:var(--azul2);font-weight:850;font-size:13px;letter-spacing:.04em;text-transform:uppercase}.empty{background:rgba(255,255,255,.85);border-radius:18px;padding:26px;box-shadow:0 15px 35px rgba(31,76,84,.1);color:#52636b}
-    .legend{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:22px 0 28px;display:flex;gap:28px;align-items:center;color:#52636b;font-size:13px}.legend span{display:inline-flex;align-items:center;gap:9px}.pin{width:19px;height:19px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);display:inline-block;background:var(--azul)}.gray{background:#84959b}
-    footer{background:#171a1b;color:#fff;padding:58px 0 56px}.footer-inner{width:min(1120px,calc(100% - 40px));margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:54px;align-items:start}footer h2{margin:0 0 24px;font-size:34px;letter-spacing:-.9px}.footer-text{color:rgba(255,255,255,.68);line-height:1.7;margin:0;max-width:420px}.mini-form{display:grid;gap:14px}.mini-form input,.mini-form textarea{width:100%;background:transparent;color:#fff;border:0;border-bottom:1px solid rgba(255,255,255,.58);padding:10px 0;outline:none;font-size:14px}.mini-form textarea{min-height:60px}.mini-form button{justify-self:start;border:1px solid rgba(255,255,255,.9);color:#fff;background:transparent;border-radius:999px;padding:10px 28px;font-weight:800}
-    @media(max-width:860px){.hero-inner{align-items:flex-start;flex-direction:column}.map-inner{grid-template-columns:1fr;padding-top:34px}.search{max-width:520px}.results{grid-template-columns:1fr}.footer-inner{grid-template-columns:1fr}}@media(max-width:520px){.brand{align-items:flex-start}.brand-icon{width:58px;height:58px;font-size:29px;border-radius:22px 22px 22px 7px}.search{padding:26px 24px}.legend{flex-direction:column;align-items:flex-start;gap:12px}}
+    .hero-inner{width:min(1120px,calc(100% - 40px));margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:22px;position:relative;z-index:1}
+    .brand{display:flex;gap:18px;align-items:center}
+    .brand-icon{width:76px;height:76px;border-radius:28px 28px 28px 8px;background:var(--azul);display:grid;place-items:center;font-size:38px;box-shadow:0 18px 35px rgba(0,0,0,.25)}
+    h1{margin:0;font-size:clamp(38px,5vw,62px);letter-spacing:-2.2px;line-height:.95}
+    .brand p{margin:8px 0 0;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .pill{border:1px solid rgba(255,255,255,.72);border-radius:999px;padding:10px 18px;font-size:13px;color:#fff;background:rgba(0,0,0,.12);white-space:nowrap}
+    .map{position:relative;min-height:475px;background:linear-gradient(90deg,rgba(222,249,238,.96),rgba(229,249,241,.84)),repeating-linear-gradient(35deg,transparent 0 90px,rgba(74,180,203,.16) 91px 93px,transparent 94px 170px),repeating-linear-gradient(117deg,transparent 0 120px,rgba(255,255,255,.75) 122px 124px,transparent 125px 220px);border-bottom:1px solid #dde9e9;overflow:hidden}
+    .map:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 22%,rgba(50,183,220,.18) 0 2px,transparent 3px),radial-gradient(circle at 58% 34%,rgba(50,183,220,.22) 0 2px,transparent 3px),radial-gradient(circle at 73% 56%,rgba(92,118,130,.16) 0 2px,transparent 3px)}
+    .map-inner{position:relative;width:min(1120px,calc(100% - 40px));margin:0 auto;padding:58px 0 48px;display:grid;grid-template-columns:340px 1fr;gap:34px;align-items:start}
+    .search{background:#fff;border-radius:4px;box-shadow:var(--sombra);padding:34px 34px 30px;z-index:2}
+    .search h2{margin:0 0 24px;font-size:24px;letter-spacing:-.7px}
+    .field{display:block;width:100%;border:0;border-bottom:2px solid #c7e3e9;padding:13px 0 11px;margin:0 0 8px;font-size:15px;font-style:italic;outline:none;color:var(--texto);background:transparent}
+    .field:focus{border-bottom-color:var(--azul)}
+    .checks{margin:22px 0 28px;display:grid;gap:10px;color:#506069;font-size:13px}
+    .checks label{display:flex;align-items:center;gap:10px}
+    input[type=checkbox]{accent-color:var(--azul)}
+    .btn{border:0;border-radius:999px;padding:12px 30px;background:var(--azul);color:white;font-weight:800;font-size:13px;letter-spacing:.04em;cursor:pointer;box-shadow:0 12px 24px rgba(50,183,220,.28)}
+    .btn2{border:0;background:transparent;color:var(--azul2);font-weight:800;cursor:pointer;margin-left:8px}
+    .summary{display:inline-flex;align-items:center;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:10px 14px;margin:12px 0 18px;color:#40545d;font-size:14px;box-shadow:0 10px 26px rgba(28,66,72,.08)}
+    .results{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:18px}
+    .card{background:rgba(255,255,255,.96);border-radius:18px;box-shadow:0 18px 35px rgba(31,76,84,.14);padding:22px 22px 20px;border:1px solid rgba(255,255,255,.9);position:relative}
+    .card:before{content:"";position:absolute;top:23px;right:22px;width:16px;height:16px;border-radius:50%;background:var(--azul);box-shadow:0 0 0 6px rgba(50,183,220,.15)}
+    .card h3{margin:0 28px 5px 0;font-size:19px;line-height:1.1;letter-spacing:-.4px}
+    .meta{color:var(--gris);font-size:13px;margin-bottom:13px}
+    .price{display:inline-block;background:#eefbf5;border:1px solid #d6efe6;color:#0f6f7e;border-radius:999px;padding:7px 11px;font-weight:800;font-size:13px;margin-bottom:13px}
+    .dishes{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:6px;color:#3b4c54;font-size:14px;line-height:1.35}
+    .dishes li:before{content:"•";color:var(--azul);font-weight:900;margin-right:8px}
+    .detail{display:inline-flex;color:var(--azul2);font-weight:850;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+    .empty{background:rgba(255,255,255,.85);border-radius:18px;padding:26px;box-shadow:0 15px 35px rgba(31,76,84,.1);color:#52636b}
+    .legend{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:22px 0 28px;display:flex;gap:28px;align-items:center;color:#52636b;font-size:13px}
+    .legend span{display:inline-flex;align-items:center;gap:9px}
+    .pin{width:19px;height:19px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);display:inline-block;background:var(--azul)}
+    .gray{background:#84959b}
+    footer{background:#171a1b;color:#fff;padding:58px 0 56px}
+    .footer-inner{width:min(1120px,calc(100% - 40px));margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:54px;align-items:start}
+    footer h2{margin:0 0 24px;font-size:34px;letter-spacing:-.9px}
+    .footer-text{color:rgba(255,255,255,.68);line-height:1.7;margin:0;max-width:420px}
+    .mini-form{display:grid;gap:14px}
+    .mini-form input,.mini-form textarea{width:100%;background:transparent;color:#fff;border:0;border-bottom:1px solid rgba(255,255,255,.58);padding:10px 0;outline:none;font-size:14px}
+    .mini-form textarea{min-height:60px}
+    .mini-form button{justify-self:start;border:1px solid rgba(255,255,255,.9);color:#fff;background:transparent;border-radius:999px;padding:10px 28px;font-weight:800}
+    @media(max-width:860px){
+      .hero-inner{align-items:flex-start;flex-direction:column}
+      .map-inner{grid-template-columns:1fr;padding-top:34px}
+      .search{max-width:520px}
+      .results{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr}
+    }
+    @media(max-width:520px){
+      .brand{align-items:flex-start}
+      .brand-icon{width:58px;height:58px;font-size:29px;border-radius:22px 22px 22px 7px}
+      .search{padding:26px 24px}
+      .legend{flex-direction:column;align-items:flex-start;gap:12px}
+    }
   </style>
 </head>
 <body>
-  <header class="hero"><div class="hero-inner"><div class="brand"><div class="brand-icon">🍴</div><div><h1>Busca menú</h1><p>Menús del día · demo municipal</p></div></div><a class="pill" href="../">Acceso restaurantes</a></div></header>
-  <main><section class="map"><div class="map-inner"><form class="search" id="searchForm"><h2>Buscar menú</h2><input class="field" id="restaurantInput" type="search" placeholder="Buscar por restaurante..." autocomplete="off"><input class="field" id="dishInput" type="search" placeholder="Buscar por plato..." autocomplete="off"><input class="field" id="priceInput" type="number" min="0" step="0.5" placeholder="Precio hasta..."><div class="checks"><label><input id="updatedOnly" type="checkbox"> Solo menús actualizados hoy</label><label><input id="withDrink" type="checkbox"> Bebida incluida</label><label><input id="withBread" type="checkbox"> Pan incluido</label></div><button class="btn" type="submit">BUSCAR</button><button class="btn2" type="button" id="clearButton">Limpiar</button></form><div><div class="summary" id="summary">Cargando menús...</div><div class="results" id="results"></div></div></div></section><div class="legend"><span><b class="pin"></b> Menú actualizado</span><span><b class="pin gray"></b> Menú pendiente de actualizar</span></div></main>
-  <footer><div class="footer-inner"><div><h2>Contáctanos</h2><p class="footer-text">Buscamenú es una herramienta para localizar menús del día por restaurante, plato y precio. Esta página forma parte de una demo funcional.</p></div><div class="mini-form"><input placeholder="Nombre" disabled><input placeholder="Teléfono" disabled><input placeholder="Mail" disabled><textarea placeholder="Comentarios" disabled></textarea><button type="button">ENVIAR</button></div></div></footer>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="brand">
+        <div class="brand-icon">🍴</div>
+        <div>
+          <h1>Busca menú</h1>
+          <p>Menús del día · demo municipal</p>
+        </div>
+      </div>
+      <a class="pill" href="../">Acceso restaurantes</a>
+    </div>
+  </header>
+  <main>
+    <section class="map">
+      <div class="map-inner">
+        <form class="search" id="searchForm">
+          <h2>Buscar menú</h2>
+          <input class="field" id="restaurantInput" type="search" placeholder="Buscar por restaurante..." autocomplete="off">
+          <input class="field" id="dishInput" type="search" placeholder="Buscar por plato..." autocomplete="off">
+          <input class="field" id="priceInput" type="number" min="0" step="0.5" placeholder="Precio hasta...">
+          <div class="checks">
+            <label><input id="updatedOnly" type="checkbox"> Solo menús actualizados hoy</label>
+            <label><input id="withDrink" type="checkbox"> Bebida incluida</label>
+            <label><input id="withBread" type="checkbox"> Pan incluido</label>
+          </div>
+          <button class="btn" type="submit">BUSCAR</button>
+          <button class="btn2" type="button" id="clearButton">Limpiar</button>
+        </form>
+    <div>
+      <div class="summary" id="summary">Cargando menús...</div>
+      <div class="results" id="results"></div>
+    </div>
+  </div>
+</section>
+<div class="legend">
+  <span><b class="pin"></b> Menú actualizado</span>
+  <span><b class="pin gray"></b> Menú pendiente de actualizar</span>
+</div>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h2>Contáctanos</h2>
+        <p class="footer-text">Buscamenú es una herramienta para localizar menús del día por restaurante, plato y precio. Esta página forma parte de una demo funcional.</p>
+      </div>
+      <div class="mini-form">
+        <input placeholder="Nombre" disabled>
+        <input placeholder="Teléfono" disabled>
+        <input placeholder="Mail" disabled>
+        <textarea placeholder="Comentarios" disabled></textarea>
+        <button type="button">ENVIAR</button>
+      </div>
+    </div>
+  </footer>
   <script>
     const state={menus:[],filtered:[]};
-    const els={form:document.getElementById('searchForm'),restaurant:document.getElementById('restaurantInput'),dish:document.getElementById('dishInput'),price:document.getElementById('priceInput'),updatedOnly:document.getElementById('updatedOnly'),withDrink:document.getElementById('withDrink'),withBread:document.getElementById('withBread'),clear:document.getElementById('clearButton'),summary:document.getElementById('summary'),results:document.getElementById('results')};
-    function normalise(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
-    function extractDishes(m){if(Array.isArray(m.platos))return m.platos.filter(Boolean);const d=[];['primeros','segundos','postre','postres'].forEach(k=>{if(Array.isArray(m[k]))d.push(...m[k])});return d.filter(Boolean)}
-    function name(m){return m.restaurante||m.nombre||'Restaurante'}
-    function url(m){return m.url||(m.slug?`../restaurantes/${m.slug}/`:'#')}
-    function priceText(m){const d=m.precio_desde,h=m.precio_hasta;if(d&&h&&d!==h)return `${d}–${h} €`;if(h)return `${h} €`;if(d)return `${d} €`;return 'Precio no indicado'}
-    function today(v){if(!v)return false;const t=new Date(),y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');return String(v).slice(0,10)===`${y}-${m}-${d}`}
-    function text(m){return normalise([name(m),m.titulo_menu,m.municipio,m.categoria,...(m.keywords||[]),...(m.etiquetas||[]),...(m.incluye||[]),...extractDishes(m)].join(' '))}
-    function apply(){const r=normalise(els.restaurant.value),dish=normalise(els.dish.value),max=Number(els.price.value||0);state.filtered=state.menus.filter(m=>{const n=normalise(name(m)),tx=text(m),p=Number(m.precio_hasta||m.precio_desde||0);if(r&&!n.includes(r))return false;if(dish&&!tx.includes(dish))return false;if(max&&p&&p>max)return false;if(els.updatedOnly.checked&&!today(m.fecha_menu))return false;if(els.withDrink.checked&&!m.bebida_incluida)return false;if(els.withBread.checked&&!m.pan_incluido)return false;return true});render()}
-    function esc(v){return String(v||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
-    function render(){const c=state.filtered.length;els.summary.textContent=c===1?'1 menú encontrado':`${c} menús encontrados`;if(!c){els.results.innerHTML='<div class="empty">No hay resultados con esos criterios. Prueba a cambiar plato, restaurante o precio máximo.</div>';return}els.results.innerHTML=state.filtered.map(m=>{const dishes=extractDishes(m).slice(0,5);const lis=dishes.length?dishes.map(d=>`<li>${esc(d)}</li>`).join(''):'<li>Menú del día disponible</li>';return `<article class="card"><h3>${esc(name(m))}</h3><div class="meta">${esc(m.municipio||'Municipio demo')} · ${esc(m.titulo_menu||'Menú del día')}</div><div class="price">${esc(priceText(m))}</div><ul class="dishes">${lis}</ul><a class="detail" href="${esc(url(m))}">Ver detalle</a></article>`}).join('')}
-
+    const els={
+      form:document.getElementById('searchForm'),
+      restaurant:document.getElementById('restaurantInput'),
+      dish:document.getElementById('dishInput'),
+      price:document.getElementById('priceInput'),
+      updatedOnly:document.getElementById('updatedOnly'),
+      withDrink:document.getElementById('withDrink'),
+      withBread:document.getElementById('withBread'),
+      clear:document.getElementById('clearButton'),
+      summary:document.getElementById('summary'),
+      results:document.getElementById('results')
+    };
+    function normalise(v){
+      return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    }
+    function extractDishes(m){
+      if(Array.isArray(m.platos)&&m.platos.length)return m.platos.filter(Boolean);
+      const d=[];
+      ['primeros','segundos','postre','postres'].forEach(k=>{
+        if(Array.isArray(m[k]))d.push(...m[k]);
+      });
+      return d.filter(Boolean);
+    }
+    function name(m){
+      return m.restaurante||m.nombre||'Restaurante';
+    }
+    function url(m){
+      return m.url||(m.slug?`../restaurantes/${m.slug}/`:'#');
+    }
+    function priceText(m){
+      const d=m.precio_desde;
+      const h=m.precio_hasta;
+      if(d&&h&&d!==h)return `${d}–${h} €`;
+      if(h)return `${h} €`;
+      if(d)return `${d} €`;
+      return 'Precio no indicado';
+    }
+    function today(v){
+      if(!v)return false;
+      const t=new Date();
+      const y=t.getFullYear();
+      const m=String(t.getMonth()+1).padStart(2,'0');
+      const d=String(t.getDate()).padStart(2,'0');
+      return String(v).slice(0,10)===`${y}-${m}-${d}`;
+    }
+    function text(m){
+      return normalise([
+        name(m),
+        m.titulo_menu,
+        m.municipio,
+        m.categoria,
+        m.descripcion,
+        ...(m.keywords||[]),
+        ...(m.etiquetas||[]),
+        ...(m.incluye||[]),
+        ...extractDishes(m)
+      ].join(' '));
+    }
+    function apply(){
+      const r=normalise(els.restaurant.value);
+      const dish=normalise(els.dish.value);
+      const max=Number(els.price.value||0);
+      state.filtered=state.menus.filter(m=>{
+        const n=normalise(name(m));
+        const tx=text(m);
+        const p=Number(m.precio_hasta||m.precio_desde||0);
+        if(r&&!n.includes(r))return false;
+        if(dish&&!tx.includes(dish))return false;
+        if(max&&p&&p>max)return false;
+        if(els.updatedOnly.checked&&!today(m.fecha_menu))return false;
+        if(els.withDrink.checked&&!m.bebida_incluida)return false;
+        if(els.withBread.checked&&!m.pan_incluido)return false;
+        return true;
+      });
+      render();
+    }
+    function esc(v){
+      return String(v||'')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+    }
+    function render(){
+      const c=state.filtered.length;
+      els.summary.textContent=c===1?'1 menú encontrado':`${c} menús encontrados`;
+      if(!c){
+        els.results.innerHTML='<div class="empty">No hay resultados con esos criterios. Prueba a cambiar plato, restaurante o precio máximo.</div>';
+        return;
+      }
+      els.results.innerHTML=state.filtered.map(m=>{
+        const dishes=extractDishes(m).slice(0,5);
+        const lis=dishes.length
+          ? dishes.map(d=>`<li>${esc(d)}</li>`).join('')
+          : '<li>Menú del día disponible</li>';
+        return `<article class="card"><h3>${esc(name(m))}</h3><div class="meta">${esc(m.municipio||'Municipio demo')} · ${esc(m.titulo_menu||'Menú del día')}</div><div class="price">${esc(priceText(m))}</div><ul class="dishes">${lis}</ul><a class="detail" href="${esc(url(m))}">Ver detalle</a></article>`;
+      }).join('');
+    }
     async function load(){
       try{
-        const res=await fetch('../data/menus-hoy/san-lorenzo-de-el-escorial.json',{cache:'no-store'});
+        const res=await fetch('../data/menus-hoy/hoyo-de-manzanares.json',{cache:'no-store'});
         if(!res.ok)throw new Error('No se pudo cargar el JSON');
         const data=await res.json();
         const localidad=data.localidad||{};
@@ -49,6 +237,10 @@
           const segundos=Array.isArray(m.segundos)?m.segundos:[];
           const postre=Array.isArray(m.postre)?m.postre:[];
           const incluye=Array.isArray(m.incluye)?m.incluye:[];
+          const platosDirectos=Array.isArray(m.platos)?m.platos:[];
+          const platos=platosDirectos.length
+            ? platosDirectos
+            : [...primeros,...segundos,...postre];
           const incluyeTexto=incluye.map(x=>normalise(x));
           return {
             restaurante:r.nombre||'Restaurante',
@@ -61,12 +253,13 @@
             fecha_menu:data.fecha||'',
             precio_desde:m.precio_desde,
             precio_hasta:m.precio_hasta,
-            platos:[...primeros,...segundos,...postre],
+            platos:platos,
             primeros:primeros,
             segundos:segundos,
             postre:postre,
             incluye:incluye,
             etiquetas:Array.isArray(m.etiquetas)?m.etiquetas:[],
+            descripcion:m.descripcion||'',
             bebida_incluida:incluyeTexto.includes('bebida'),
             pan_incluido:incluyeTexto.includes('pan')
           };
@@ -75,14 +268,27 @@
         render();
       }catch(e){
         els.summary.textContent='No se pudieron cargar los menús';
-        els.results.innerHTML='<div class="empty">Revisa que exista el archivo <strong>data/menus-hoy/san-lorenzo-de-el-escorial.json</strong>.</div>';
+        els.results.innerHTML='<div class="empty">Revisa que exista el archivo <strong>data/menus-hoy/hoyo-de-manzanares.json</strong>.</div>';
         console.error(e);
       }
     }
-
-    els.form.addEventListener('submit',e=>{e.preventDefault();apply()});
-    [els.restaurant,els.dish,els.price,els.updatedOnly,els.withDrink,els.withBread].forEach(el=>{el.addEventListener('input',apply);el.addEventListener('change',apply)});
-    els.clear.addEventListener('click',()=>{els.restaurant.value='';els.dish.value='';els.price.value='';els.updatedOnly.checked=false;els.withDrink.checked=false;els.withBread.checked=false;apply()});
+    els.form.addEventListener('submit',e=>{
+      e.preventDefault();
+      apply();
+    });
+    [els.restaurant,els.dish,els.price,els.updatedOnly,els.withDrink,els.withBread].forEach(el=>{
+      el.addEventListener('input',apply);
+      el.addEventListener('change',apply);
+    });
+    els.clear.addEventListener('click',()=>{
+      els.restaurant.value='';
+      els.dish.value='';
+      els.price.value='';
+      els.updatedOnly.checked=false;
+      els.withDrink.checked=false;
+      els.withBread.checked=false;
+      apply();
+    });
     load();
   </script>
 </body>
