@@ -9,7 +9,6 @@
   <style>
     :root {
       --bg: #f6f1e8;
-      --card: #fffaf2;
       --ink: #2f241b;
       --muted: #7a685a;
       --line: #e4d5c4;
@@ -282,7 +281,10 @@
       font-weight: 850;
     }
 
-    .actions { display: flex; align-items: flex-start; }
+    .actions {
+      display: flex;
+      align-items: flex-start;
+    }
 
     .button {
       text-decoration: none;
@@ -315,9 +317,16 @@
     @media (max-width: 880px) {
       .filters,
       .card,
-      .columns { grid-template-columns: 1fr; }
+      .columns {
+        grid-template-columns: 1fr;
+      }
+
       .actions { align-items: stretch; }
-      .button { display: block; text-align: center; }
+
+      .button {
+        display: block;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -357,9 +366,20 @@
       </div>
 
       <div class="checks">
-        <label class="check"><input id="updatedOnly" type="checkbox">Solo menús de hoy</label>
-        <label class="check"><input id="withDrink" type="checkbox">Bebida incluida</label>
-        <label class="check"><input id="withBread" type="checkbox">Pan incluido</label>
+        <label class="check">
+          <input id="updatedOnly" type="checkbox">
+          Solo menús de hoy
+        </label>
+
+        <label class="check">
+          <input id="withDrink" type="checkbox">
+          Bebida incluida
+        </label>
+
+        <label class="check">
+          <input id="withBread" type="checkbox">
+          Pan incluido
+        </label>
       </div>
     </section>
 
@@ -376,7 +396,12 @@
   </main>
 
   <script>
-    const state = { all: [], filtered: [], dataDate: '', localidad: null };
+    const state = {
+      all: [],
+      filtered: [],
+      dataDate: '',
+      localidad: null
+    };
 
     const els = {
       restaurant: document.getElementById('restaurant'),
@@ -407,11 +432,13 @@
 
     function numberFromPrice(value) {
       if (typeof value === 'number') return value;
-      const cleaned = String(value || '').replace(',', '.').replace(/[^0-9.]/g, '');
+      const cleaned = String(value || '')
+        .replace(',', '.')
+        .replace(/[^0-9.]/g, '');
       return Number(cleaned || 0);
     }
 
-    function array(value) {
+    function asArray(value) {
       return Array.isArray(value) ? value : [];
     }
 
@@ -420,11 +447,11 @@
         menu.nombre,
         menu.precio,
         menu.descripcion,
-        ...array(menu.primeros),
-        ...array(menu.segundos),
-        ...array(menu.postre),
-        ...array(menu.platos),
-        ...array(menu.incluye)
+        ...asArray(menu.primeros),
+        ...asArray(menu.segundos),
+        ...asArray(menu.postre),
+        ...asArray(menu.platos),
+        ...asArray(menu.incluye)
       ].join(' ');
     }
 
@@ -434,16 +461,16 @@
         entry.restaurante.categoria_cocina,
         entry.menu.titulo,
         entry.menu.descripcion,
-        ...array(entry.menu.primeros),
-        ...array(entry.menu.segundos),
-        ...array(entry.menu.postre),
-        ...array(entry.menu.platos),
-        ...array(entry.menu.incluye),
-        ...array(entry.menu.etiquetas)
+        ...asArray(entry.menu.primeros),
+        ...asArray(entry.menu.segundos),
+        ...asArray(entry.menu.postre),
+        ...asArray(entry.menu.platos),
+        ...asArray(entry.menu.incluye),
+        ...asArray(entry.menu.etiquetas)
       ];
 
-      for (const sub of array(entry.menu.menus)) {
-        base.push(collectMenuText(sub));
+      for (const submenu of asArray(entry.menu.menus)) {
+        base.push(collectMenuText(submenu));
       }
 
       return base.join(' ');
@@ -453,67 +480,53 @@
       return Number(menu.precio_valor || numberFromPrice(menu.precio));
     }
 
-    function entrySinglePrice(entry) {
+    function singlePrice(entry) {
       return Number(entry.menu.precio_valor || numberFromPrice(entry.menu.precio));
     }
 
-    function entryMinimumPrice(entry) {
-      if (entry.menu.tipo === 'multiple' && array(entry.menu.menus).length) {
-        const prices = entry.menu.menus.map(menuPrice).filter(price => price > 0);
+    function minimumPrice(entry) {
+      if (entry.menu.tipo === 'multiple' && asArray(entry.menu.menus).length) {
+        const prices = entry.menu.menus
+          .map(menuPrice)
+          .filter(price => price > 0);
+
         return prices.length ? Math.min(...prices) : 0;
       }
 
-      return entrySinglePrice(entry);
+      return singlePrice(entry);
     }
 
     function entryIncludes(entry, word) {
-      const entryInclude = array(entry.menu.incluye).map(normalise);
-      const subInclude = array(entry.menu.menus).flatMap(menu => array(menu.incluye)).map(normalise);
-      return [...entryInclude, ...subInclude].includes(word);
+      const mainIncludes = asArray(entry.menu.incluye).map(normalise);
+      const submenuIncludes = asArray(entry.menu.menus)
+        .flatMap(menu => asArray(menu.incluye))
+        .map(normalise);
+
+      return [...mainIncludes, ...submenuIncludes].includes(word);
     }
 
     function matchingSubmenus(entry, filters) {
-      const submenus = array(entry.menu.menus);
-      if (entry.menu.tipo !== 'multiple' || !submenus.length) return [];
+      const submenus = asArray(entry.menu.menus);
+
+      if (entry.menu.tipo !== 'multiple' || !submenus.length) {
+        return [];
+      }
 
       return submenus.filter(menu => {
         const price = menuPrice(menu);
         const text = normalise(collectMenuText(menu));
-        const include = array(menu.incluye).map(normalise);
+        const includes = asArray(menu.incluye).map(normalise);
 
         if (filters.maxPrice && price && price > filters.maxPrice) return false;
         if (filters.dish && !text.includes(filters.dish)) return false;
-        if (filters.withDrink && !include.includes('bebida')) return false;
-        if (filters.withBread && !include.includes('pan')) return false;
+        if (filters.withDrink && !includes.includes('bebida')) return false;
+        if (filters.withBread && !includes.includes('pan')) return false;
 
         return true;
       });
     }
 
-    function entryPasses(entry, filters) {
-      const restaurantName = normalise(entry.restaurante.nombre);
-      const fullText = normalise(collectEntryText(entry));
-
-      if (filters.restaurant && !restaurantName.includes(filters.restaurant)) return false;
-
-      if (entry.menu.tipo === 'multiple') {
-        const matches = matchingSubmenus(entry, filters);
-        if (filters.maxPrice || filters.dish || filters.withDrink || filters.withBread) {
-          return matches.length > 0;
-        }
-        return true;
-      }
-
-      const price = entrySinglePrice(entry);
-      if (filters.dish && !fullText.includes(filters.dish)) return false;
-      if (filters.maxPrice && price && price > filters.maxPrice) return false;
-      if (filters.withDrink && !entryIncludes(entry, 'bebida')) return false;
-      if (filters.withBread && !entryIncludes(entry, 'pan')) return false;
-
-      return true;
-    }
-
-    function getFilters() {
+    function filtersFromInputs() {
       return {
         restaurant: normalise(els.restaurant.value),
         dish: normalise(els.dish.value),
@@ -524,11 +537,40 @@
       };
     }
 
+    function entryPasses(entry, filters) {
+      const restaurantName = normalise(entry.restaurante.nombre);
+      const fullText = normalise(collectEntryText(entry));
+
+      if (filters.restaurant && !restaurantName.includes(filters.restaurant)) {
+        return false;
+      }
+
+      if (entry.menu.tipo === 'multiple') {
+        const matches = matchingSubmenus(entry, filters);
+        if (filters.maxPrice || filters.dish || filters.withDrink || filters.withBread) {
+          return matches.length > 0;
+        }
+        return true;
+      }
+
+      const price = singlePrice(entry);
+
+      if (filters.dish && !fullText.includes(filters.dish)) return false;
+      if (filters.maxPrice && price && price > filters.maxPrice) return false;
+      if (filters.withDrink && !entryIncludes(entry, 'bebida')) return false;
+      if (filters.withBread && !entryIncludes(entry, 'pan')) return false;
+
+      return true;
+    }
+
     function apply() {
-      const filters = getFilters();
+      const filters = filtersFromInputs();
 
       state.filtered = state.all.filter(entry => {
-        if (filters.updatedOnly && entry.fecha_menu && state.dataDate && entry.fecha_menu !== state.dataDate) return false;
+        if (filters.updatedOnly && entry.fecha_menu && state.dataDate && entry.fecha_menu !== state.dataDate) {
+          return false;
+        }
+
         return entryPasses(entry, filters);
       });
 
@@ -545,7 +587,7 @@
     }
 
     function listHtml(items) {
-      const safe = array(items).filter(Boolean);
+      const safe = asArray(items).filter(Boolean);
       if (!safe.length) return '';
       return `<ul>${safe.map(item => `<li>${esc(item)}</li>`).join('')}</ul>`;
     }
@@ -553,41 +595,68 @@
     function menuColumnsHtml(menu) {
       const blocks = [];
 
-      if (array(menu.primeros).length) {
-        blocks.push(`<div><p class="section-title">Primeros</p>${listHtml(menu.primeros)}</div>`);
+      if (asArray(menu.primeros).length) {
+        blocks.push(`
+          <div>
+            <p class="section-title">Primeros</p>
+            ${listHtml(menu.primeros)}
+          </div>
+        `);
       }
 
-      if (array(menu.segundos).length) {
-        blocks.push(`<div><p class="section-title">Segundos</p>${listHtml(menu.segundos)}</div>`);
+      if (asArray(menu.segundos).length) {
+        blocks.push(`
+          <div>
+            <p class="section-title">Segundos</p>
+            ${listHtml(menu.segundos)}
+          </div>
+        `);
       }
 
-      if (array(menu.postre).length) {
-        blocks.push(`<div><p class="section-title">Postre</p>${listHtml(menu.postre)}</div>`);
+      if (asArray(menu.postre).length) {
+        blocks.push(`
+          <div>
+            <p class="section-title">Postre</p>
+            ${listHtml(menu.postre)}
+          </div>
+        `);
       }
 
-      if (!blocks.length && array(menu.platos).length) {
-        blocks.push(`<div><p class="section-title">Platos</p>${listHtml(menu.platos)}</div>`);
+      if (!blocks.length && asArray(menu.platos).length) {
+        blocks.push(`
+          <div>
+            <p class="section-title">Platos</p>
+            ${listHtml(menu.platos)}
+          </div>
+        `);
       }
 
       return blocks.length ? `<div class="columns">${blocks.join('')}</div>` : '';
     }
 
     function includedHtml(menu) {
-      const included = array(menu.incluye);
-      if (included.length) return `<p class="included">Incluye ${esc(included.join(', ').toLowerCase())}.</p>`;
-      if (menu.descripcion) return `<p class="included">${esc(menu.descripcion)}</p>`;
+      const included = asArray(menu.incluye);
+
+      if (included.length) {
+        return `<p class="included">Incluye ${esc(included.join(', ').toLowerCase())}.</p>`;
+      }
+
+      if (menu.descripcion) {
+        return `<p class="included">${esc(menu.descripcion)}</p>`;
+      }
+
       return '';
     }
 
     function singleMenuHtml(entry) {
       const menu = entry.menu;
-      const name = menu.titulo || menu.nombre || 'Menú del día';
+      const title = menu.titulo || menu.nombre || 'Menú del día';
       const price = menu.precio || (menu.precio_valor ? `${menu.precio_valor} €` : '');
 
       return `
         <div class="menu-block">
           <div class="menu-head">
-            <div class="menu-name">${esc(name)}</div>
+            <div class="menu-name">${esc(title)}</div>
             ${price ? `<div class="menu-price">${esc(price)}</div>` : ''}
           </div>
           ${menuColumnsHtml(menu)}
@@ -597,48 +666,51 @@
     }
 
     function multipleMenusHtml(entry, filters) {
-      const allSubmenus = array(entry.menu.menus);
+      const allSubmenus = asArray(entry.menu.menus);
       const matches = matchingSubmenus(entry, filters);
-      const shouldLimit = filters.maxPrice || filters.dish || filters.withDrink || filters.withBread;
-      const visibleMenus = shouldLimit ? matches : allSubmenus;
+      const filteredByMenu = filters.maxPrice || filters.dish || filters.withDrink || filters.withBread;
+      const visibleMenus = filteredByMenu ? matches : allSubmenus;
 
-      return visibleMenus.map(menu => `
-        <div class="menu-block">
-          <div class="menu-head">
-            <div class="menu-name">${esc(menu.nombre || 'Menú')}</div>
-            ${menu.precio ? `<div class="menu-price">${esc(menu.precio)}</div>` : ''}
+      return visibleMenus.map(menu => {
+        const label = `${menu.nombre || 'Menú'}${menu.precio ? ' · ' + menu.precio : ''}`;
+
+        return `
+          <div class="menu-block">
+            <div class="menu-head">
+              <div class="menu-name">${esc(menu.nombre || 'Menú')}</div>
+              ${menu.precio ? `<div class="menu-price">${esc(menu.precio)}</div>` : ''}
+            </div>
+            ${menuColumnsHtml(menu)}
+            ${includedHtml(menu)}
+            ${filteredByMenu ? `<div class="match">Cumple por: ${esc(label)}</div>` : ''}
           </div>
-          ${menuColumnsHtml(menu)}
-          ${includedHtml(menu)}
-          ${shouldLimit ? `<div class="match">Cumple por: ${esc(menu.nombre || 'Menú')} ${menu.precio ? '· ' + esc(menu.precio) : ''}</div>` : ''}
-        </div>
-      `).join('');
-    }
-
-    function typeLabel(type) {
-      if (type === 'plato_del_dia') return 'Plato del día';
-      if (type === 'multiple') return 'Varios menús';
-      return 'Menú simple';
+        `;
+      }).join('');
     }
 
     function cardHtml(entry, filters) {
       const restaurant = entry.restaurante;
-      const isMultiple = entry.menu.tipo === 'multiple' && array(entry.menu.menus).length;
-      const menuHtml = isMultiple ? multipleMenusHtml(entry, filters) : singleMenuHtml(entry);
-      const minPrice = entryMinimumPrice(entry);
+      const isMultiple = entry.menu.tipo === 'multiple' && asArray(entry.menu.menus).length;
+      const menusHtml = isMultiple ? multipleMenusHtml(entry, filters) : singleMenuHtml(entry);
+      const minPrice = minimumPrice(entry);
 
       return `
         <article class="card">
           <div>
             <h2>${esc(restaurant.nombre)}</h2>
+
             <div class="meta">
               ${restaurant.direccion ? `<span class="pill">📍 ${esc(restaurant.direccion)}</span>` : ''}
               ${restaurant.categoria_cocina ? `<span class="pill">🍲 ${esc(restaurant.categoria_cocina)}</span>` : ''}
               ${minPrice ? `<span class="pill">Desde ${esc(String(minPrice).replace('.', ','))} €</span>` : ''}
-              ${entry.menu.tipo ? `<span class="pill">${esc(typeLabel(entry.menu.tipo))}</span>` : ''}
+              ${entry.menu.tipo ? `<span class="pill">${esc(entry.menu.tipo)}</span>` : ''}
             </div>
-            <div class="menus">${menuHtml}</div>
+
+            <div class="menus">
+              ${menusHtml}
+            </div>
           </div>
+
           <div class="actions">
             <a class="button" href="${esc(restaurant.url_publica || '#')}">Ver ficha</a>
           </div>
@@ -646,15 +718,21 @@
       `;
     }
 
-    function render(filters = getFilters()) {
+    function render(filters = filtersFromInputs()) {
       els.countLabel.textContent = `${state.filtered.length} resultado${state.filtered.length === 1 ? '' : 's'}`;
 
       if (!state.filtered.length) {
-        els.results.innerHTML = `<div class="empty">No hay menús que cumplan esos filtros. Prueba con otro plato, restaurante o precio.</div>`;
+        els.results.innerHTML = `
+          <div class="empty">
+            No hay menús que cumplan esos filtros. Prueba con otro plato, restaurante o precio.
+          </div>
+        `;
         return;
       }
 
-      els.results.innerHTML = state.filtered.map(entry => cardHtml(entry, filters)).join('');
+      els.results.innerHTML = state.filtered
+        .map(entry => cardHtml(entry, filters))
+        .join('');
     }
 
     function mapEntry(item, data) {
@@ -678,22 +756,22 @@
           precio: menu.precio || '',
           precio_valor: Number(menu.precio_valor || numberFromPrice(menu.precio)),
           descripcion: menu.descripcion || '',
-          primeros: array(menu.primeros),
-          segundos: array(menu.segundos),
-          postre: array(menu.postre),
-          platos: array(menu.platos),
-          incluye: array(menu.incluye),
-          etiquetas: array(menu.etiquetas),
-          menus: array(menu.menus).map(submenu => ({
+          primeros: asArray(menu.primeros),
+          segundos: asArray(menu.segundos),
+          postre: asArray(menu.postre),
+          platos: asArray(menu.platos),
+          incluye: asArray(menu.incluye),
+          etiquetas: asArray(menu.etiquetas),
+          menus: asArray(menu.menus).map(submenu => ({
             nombre: submenu.nombre || 'Menú',
             precio: submenu.precio || '',
             precio_valor: Number(submenu.precio_valor || numberFromPrice(submenu.precio)),
             descripcion: submenu.descripcion || '',
-            primeros: array(submenu.primeros),
-            segundos: array(submenu.segundos),
-            postre: array(submenu.postre),
-            platos: array(submenu.platos),
-            incluye: array(submenu.incluye)
+            primeros: asArray(submenu.primeros),
+            segundos: asArray(submenu.segundos),
+            postre: asArray(submenu.postre),
+            platos: asArray(submenu.platos),
+            incluye: asArray(submenu.incluye)
           }))
         },
         fecha_menu: menu.fecha || data.fecha || ''
@@ -703,12 +781,16 @@
     async function load() {
       try {
         const response = await fetch('../data/menus-hoy/hoyo-de-manzanares.json', { cache: 'no-store' });
-        if (!response.ok) throw new Error(`No se pudo cargar el JSON público: ${response.status}`);
+
+        if (!response.ok) {
+          throw new Error(`No se pudo cargar el JSON público: ${response.status}`);
+        }
 
         const data = await response.json();
+
         state.localidad = data.localidad || null;
         state.dataDate = data.fecha || '';
-        state.all = array(data.menus).map(item => mapEntry(item, data));
+        state.all = asArray(data.menus).map(item => mapEntry(item, data));
         state.filtered = [...state.all];
 
         if (state.localidad && state.localidad.nombre) {
@@ -724,14 +806,22 @@
         els.countLabel.textContent = 'Error al cargar menús';
         els.results.innerHTML = `
           <div class="error">
-            No se pudo cargar el buscador. Revisa el archivo JSON público o la ruta de datos.<br><br>
+            No se pudo cargar el buscador. Revisa el archivo JSON público o la ruta de datos.
+            <br><br>
             Detalle: ${esc(error.message)}
           </div>
         `;
       }
     }
 
-    for (const input of [els.restaurant, els.dish, els.price, els.updatedOnly, els.withDrink, els.withBread]) {
+    for (const input of [
+      els.restaurant,
+      els.dish,
+      els.price,
+      els.updatedOnly,
+      els.withDrink,
+      els.withBread
+    ]) {
       input.addEventListener('input', apply);
       input.addEventListener('change', apply);
     }
