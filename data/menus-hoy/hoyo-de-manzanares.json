@@ -19,10 +19,10 @@
         "id": "casa-pepe-demo_2026-06-25",
         "titulo": "Menú del día",
         "estado": "publicado",
-        "precio_desde": 12.5,
-        "precio_hasta": 12.5,
         "tiene_menu_hoy": true,
         "tipo": "simple",
+        "precio": "12,50 €",
+        "precio_valor": 12.5,
         "primeros": [
           "Ensalada mixta",
           "Lentejas caseras",
@@ -77,10 +77,10 @@
         "id": "focaccia-demo_2026-06-27",
         "titulo": "Plato del día",
         "estado": "publicado",
-        "precio_desde": 9.5,
-        "precio_hasta": 9.5,
         "tiene_menu_hoy": true,
         "tipo": "plato_del_dia",
+        "precio": "9,50 €",
+        "precio_valor": 9.5,
         "primeros": [],
         "segundos": [],
         "postre": [],
@@ -113,14 +113,13 @@
         "id": "pivo-demo_2026-06-27",
         "titulo": "Menús del día",
         "estado": "publicado",
-        "precio_desde": 14,
-        "precio_hasta": 16,
         "tiene_menu_hoy": true,
         "tipo": "multiple",
         "menus": [
           {
             "nombre": "Menú del día",
             "precio": "14 €",
+            "precio_valor": 14,
             "primeros": [
               "Salmorejo",
               "Arroz de verduras",
@@ -142,6 +141,7 @@
           {
             "nombre": "Menú ejecutivo",
             "precio": "16 €",
+            "precio_valor": 16,
             "primeros": [
               "Ensalada templada",
               "Crema de verduras"
