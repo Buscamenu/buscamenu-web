@@ -1,294 +1,741 @@
 <!doctype html>
-
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Buscamenú · Buscar menús del día</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buscar menús · Buscamenú</title>
+  <meta name="description" content="Buscador de menús del día por localidad, restaurante, plato y precio.">
+
   <style>
-    :root{--azul:#35b9dc;--azul2:#1285a7;--texto:#263640;--gris:#637580;--borde:#cde3e7;--sombra:0 18px 45px rgba(29,54,65,.18)}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--texto);background:#f6faf9}
-    a{text-decoration:none;color:inherit}
-    .hero{min-height:260px;display:flex;align-items:center;color:#fff;background:linear-gradient(90deg,rgba(11,31,40,.82),rgba(11,31,40,.28)),linear-gradient(135deg,#263f45,#496b67 45%,#16262d);position:relative;overflow:hidden}
-    .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(130deg,transparent 0 35%,rgba(255,255,255,.08) 36% 37%,transparent 38%),linear-gradient(18deg,transparent 0 58%,rgba(255,255,255,.07) 59% 60%,transparent 61%);pointer-events:none}
-    .hero-inner{width:min(1120px,calc(100% - 40px));margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:22px;position:relative;z-index:1}
-    .brand{display:flex;gap:18px;align-items:center}
-    .brand-icon{width:76px;height:76px;border-radius:28px 28px 28px 8px;background:var(--azul);display:grid;place-items:center;font-size:38px;box-shadow:0 18px 35px rgba(0,0,0,.25)}
-    h1{margin:0;font-size:clamp(38px,5vw,62px);letter-spacing:-2.2px;line-height:.95}
-    .brand p{margin:8px 0 0;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-    .pill{border:1px solid rgba(255,255,255,.72);border-radius:999px;padding:10px 18px;font-size:13px;color:#fff;background:rgba(0,0,0,.12);white-space:nowrap}
-    .map{position:relative;min-height:475px;background:linear-gradient(90deg,rgba(222,249,238,.96),rgba(229,249,241,.84)),repeating-linear-gradient(35deg,transparent 0 90px,rgba(74,180,203,.16) 91px 93px,transparent 94px 170px),repeating-linear-gradient(117deg,transparent 0 120px,rgba(255,255,255,.75) 122px 124px,transparent 125px 220px);border-bottom:1px solid #dde9e9;overflow:hidden}
-    .map:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 22%,rgba(50,183,220,.18) 0 2px,transparent 3px),radial-gradient(circle at 58% 34%,rgba(50,183,220,.22) 0 2px,transparent 3px),radial-gradient(circle at 73% 56%,rgba(92,118,130,.16) 0 2px,transparent 3px)}
-    .map-inner{position:relative;width:min(1120px,calc(100% - 40px));margin:0 auto;padding:58px 0 48px;display:grid;grid-template-columns:340px 1fr;gap:34px;align-items:start}
-    .search{background:#fff;border-radius:4px;box-shadow:var(--sombra);padding:34px 34px 30px;z-index:2}
-    .search h2{margin:0 0 24px;font-size:24px;letter-spacing:-.7px}
-    .field{display:block;width:100%;border:0;border-bottom:2px solid #c7e3e9;padding:13px 0 11px;margin:0 0 8px;font-size:15px;font-style:italic;outline:none;color:var(--texto);background:transparent}
-    .field:focus{border-bottom-color:var(--azul)}
-    .checks{margin:22px 0 28px;display:grid;gap:10px;color:#506069;font-size:13px}
-    .checks label{display:flex;align-items:center;gap:10px}
-    input[type=checkbox]{accent-color:var(--azul)}
-    .btn{border:0;border-radius:999px;padding:12px 30px;background:var(--azul);color:white;font-weight:800;font-size:13px;letter-spacing:.04em;cursor:pointer;box-shadow:0 12px 24px rgba(50,183,220,.28)}
-    .btn2{border:0;background:transparent;color:var(--azul2);font-weight:800;cursor:pointer;margin-left:8px}
-    .summary{display:inline-flex;align-items:center;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:10px 14px;margin:12px 0 18px;color:#40545d;font-size:14px;box-shadow:0 10px 26px rgba(28,66,72,.08)}
-    .results{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:18px}
-    .card{background:rgba(255,255,255,.96);border-radius:18px;box-shadow:0 18px 35px rgba(31,76,84,.14);padding:22px 22px 20px;border:1px solid rgba(255,255,255,.9);position:relative}
-    .card:before{content:"";position:absolute;top:23px;right:22px;width:16px;height:16px;border-radius:50%;background:var(--azul);box-shadow:0 0 0 6px rgba(50,183,220,.15)}
-    .card h3{margin:0 28px 5px 0;font-size:19px;line-height:1.1;letter-spacing:-.4px}
-    .meta{color:var(--gris);font-size:13px;margin-bottom:13px}
-    .price{display:inline-block;background:#eefbf5;border:1px solid #d6efe6;color:#0f6f7e;border-radius:999px;padding:7px 11px;font-weight:800;font-size:13px;margin-bottom:13px}
-    .dishes{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:6px;color:#3b4c54;font-size:14px;line-height:1.35}
-    .dishes li:before{content:"•";color:var(--azul);font-weight:900;margin-right:8px}
-    .detail{display:inline-flex;color:var(--azul2);font-weight:850;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
-    .empty{background:rgba(255,255,255,.85);border-radius:18px;padding:26px;box-shadow:0 15px 35px rgba(31,76,84,.1);color:#52636b}
-    .legend{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:22px 0 28px;display:flex;gap:28px;align-items:center;color:#52636b;font-size:13px}
-    .legend span{display:inline-flex;align-items:center;gap:9px}
-    .pin{width:19px;height:19px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);display:inline-block;background:var(--azul)}
-    .gray{background:#84959b}
-    footer{background:#171a1b;color:#fff;padding:58px 0 56px}
-    .footer-inner{width:min(1120px,calc(100% - 40px));margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:54px;align-items:start}
-    footer h2{margin:0 0 24px;font-size:34px;letter-spacing:-.9px}
-    .footer-text{color:rgba(255,255,255,.68);line-height:1.7;margin:0;max-width:420px}
-    .mini-form{display:grid;gap:14px}
-    .mini-form input,.mini-form textarea{width:100%;background:transparent;color:#fff;border:0;border-bottom:1px solid rgba(255,255,255,.58);padding:10px 0;outline:none;font-size:14px}
-    .mini-form textarea{min-height:60px}
-    .mini-form button{justify-self:start;border:1px solid rgba(255,255,255,.9);color:#fff;background:transparent;border-radius:999px;padding:10px 28px;font-weight:800}
-    @media(max-width:860px){
-      .hero-inner{align-items:flex-start;flex-direction:column}
-      .map-inner{grid-template-columns:1fr;padding-top:34px}
-      .search{max-width:520px}
-      .results{grid-template-columns:1fr}
-      .footer-inner{grid-template-columns:1fr}
+    :root {
+      --bg: #f6f1e8;
+      --card: #fffaf2;
+      --ink: #2f241b;
+      --muted: #7a685a;
+      --line: #e4d5c4;
+      --accent: #b06f32;
+      --accent-dark: #714219;
+      --green: #2f7d46;
+      --shadow: 0 18px 50px rgba(64, 43, 24, .12);
+      --radius: 24px;
     }
-    @media(max-width:520px){
-      .brand{align-items:flex-start}
-      .brand-icon{width:58px;height:58px;font-size:29px;border-radius:22px 22px 22px 7px}
-      .search{padding:26px 24px}
-      .legend{flex-direction:column;align-items:flex-start;gap:12px}
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(176,111,50,.16), transparent 32rem),
+        linear-gradient(180deg, #fff7eb 0%, var(--bg) 45%, #efe3d3 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      background: var(--accent);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 24px rgba(176,111,50,.25);
+    }
+
+    .crumb {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .hero,
+    .filters,
+    .card,
+    .empty,
+    .error {
+      background: rgba(255,250,242,.9);
+      border: 1px solid rgba(228,213,196,.95);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: clamp(24px, 4vw, 44px);
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: .95;
+      letter-spacing: -.07em;
+      margin: 0 0 12px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.45;
+      max-width: 780px;
+      margin: 0;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr .7fr;
+      gap: 14px;
+      margin: 22px 0;
+      padding: 18px;
+    }
+
+    .field { display: grid; gap: 7px; }
+
+    label {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--accent-dark);
+      text-transform: uppercase;
+      letter-spacing: .09em;
+    }
+
+    input[type="search"],
+    input[type="number"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: white;
+      color: var(--ink);
+      font: inherit;
+      font-size: 17px;
+      padding: 14px 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(176,111,50,.14);
+    }
+
+    .checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      grid-column: 1 / -1;
+    }
+
+    .check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--muted);
+      font-weight: 750;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 14px;
+    }
+
+    .check input { accent-color: var(--accent); }
+
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      margin: 0 0 14px;
+      font-weight: 750;
+    }
+
+    .results { display: grid; gap: 16px; }
+
+    .card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      padding: 22px;
+    }
+
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      letter-spacing: -.04em;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      background: #f2e1cd;
+      color: var(--accent-dark);
+      padding: 7px 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .menus {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .menu-block {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .menu-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .menu-name {
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+    }
+
+    .menu-price {
+      flex: 0 0 auto;
+      color: white;
+      background: var(--accent-dark);
+      border-radius: 14px;
+      padding: 8px 11px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .section-title {
+      font-weight: 900;
+      margin: 0 0 5px;
+      color: var(--accent-dark);
+      font-size: 14px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 19px;
+      line-height: 1.65;
+    }
+
+    .included {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f2e1cd;
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
+    .match {
+      margin-top: 10px;
+      color: var(--green);
+      font-weight: 850;
+    }
+
+    .actions { display: flex; align-items: flex-start; }
+
+    .button {
+      text-decoration: none;
+      border-radius: 16px;
+      padding: 13px 16px;
+      background: var(--green);
+      color: white;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .empty,
+    .error {
+      padding: 24px;
+      color: var(--muted);
+    }
+
+    .error {
+      color: #8a2f20;
+      background: #fff0ed;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 880px) {
+      .filters,
+      .card,
+      .columns { grid-template-columns: 1fr; }
+      .actions { align-items: stretch; }
+      .button { display: block; text-align: center; }
     }
   </style>
 </head>
+
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="brand">
-        <div class="brand-icon">🍴</div>
-        <div>
-          <h1>Busca menú</h1>
-          <p>Menús del día · demo municipal</p>
-        </div>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="../">
+        <span class="brand-mark">🍽️</span>
+        <span>Buscamenú</span>
+      </a>
+      <div class="crumb" id="locationLabel">Buscador de menús</div>
+    </header>
+
+    <section class="hero">
+      <h1>Buscar menús de hoy</h1>
+      <p class="subtitle">
+        Encuentra restaurantes por nombre, plato, precio máximo o condiciones incluidas.
+        Si un restaurante tiene varios menús, cada menú conserva su propio precio.
+      </p>
+    </section>
+
+    <section class="filters" aria-label="Filtros de búsqueda">
+      <div class="field">
+        <label for="restaurant">Restaurante</label>
+        <input id="restaurant" type="search" placeholder="Ej. Casa Pepe, Pivo...">
       </div>
-      <a class="pill" href="../">Acceso restaurantes</a>
+
+      <div class="field">
+        <label for="dish">Plato o ingrediente</label>
+        <input id="dish" type="search" placeholder="Ej. salmón, lentejas, burrata...">
+      </div>
+
+      <div class="field">
+        <label for="price">Precio máximo</label>
+        <input id="price" type="number" min="0" step="0.5" placeholder="Ej. 14">
+      </div>
+
+      <div class="checks">
+        <label class="check"><input id="updatedOnly" type="checkbox">Solo menús de hoy</label>
+        <label class="check"><input id="withDrink" type="checkbox">Bebida incluida</label>
+        <label class="check"><input id="withBread" type="checkbox">Pan incluido</label>
+      </div>
+    </section>
+
+    <div class="summary">
+      <span id="countLabel">Cargando menús...</span>
+      <span id="dateLabel"></span>
     </div>
-  </header>
-  <main>
-    <section class="map">
-      <div class="map-inner">
-        <form class="search" id="searchForm">
-          <h2>Buscar menú</h2>
-          <input class="field" id="restaurantInput" type="search" placeholder="Buscar por restaurante..." autocomplete="off">
-          <input class="field" id="dishInput" type="search" placeholder="Buscar por plato..." autocomplete="off">
-          <input class="field" id="priceInput" type="number" min="0" step="0.5" placeholder="Precio hasta...">
-          <div class="checks">
-            <label><input id="updatedOnly" type="checkbox"> Solo menús actualizados hoy</label>
-            <label><input id="withDrink" type="checkbox"> Bebida incluida</label>
-            <label><input id="withBread" type="checkbox"> Pan incluido</label>
-          </div>
-          <button class="btn" type="submit">BUSCAR</button>
-          <button class="btn2" type="button" id="clearButton">Limpiar</button>
-        </form>
-    <div>
-      <div class="summary" id="summary">Cargando menús...</div>
-      <div class="results" id="results"></div>
-    </div>
-  </div>
-</section>
-<div class="legend">
-  <span><b class="pin"></b> Menú actualizado</span>
-  <span><b class="pin gray"></b> Menú pendiente de actualizar</span>
-</div>
+
+    <section id="results" class="results" aria-live="polite"></section>
+
+    <footer>
+      Buscamenú · Datos de demostración preparados para el flujo Airtable → JSON → web.
+    </footer>
   </main>
-  <footer>
-    <div class="footer-inner">
-      <div>
-        <h2>Contáctanos</h2>
-        <p class="footer-text">Buscamenú es una herramienta para localizar menús del día por restaurante, plato y precio. Esta página forma parte de una demo funcional.</p>
-      </div>
-      <div class="mini-form">
-        <input placeholder="Nombre" disabled>
-        <input placeholder="Teléfono" disabled>
-        <input placeholder="Mail" disabled>
-        <textarea placeholder="Comentarios" disabled></textarea>
-        <button type="button">ENVIAR</button>
-      </div>
-    </div>
-  </footer>
+
   <script>
-    const state={menus:[],filtered:[]};
-    const els={
-      form:document.getElementById('searchForm'),
-      restaurant:document.getElementById('restaurantInput'),
-      dish:document.getElementById('dishInput'),
-      price:document.getElementById('priceInput'),
-      updatedOnly:document.getElementById('updatedOnly'),
-      withDrink:document.getElementById('withDrink'),
-      withBread:document.getElementById('withBread'),
-      clear:document.getElementById('clearButton'),
-      summary:document.getElementById('summary'),
-      results:document.getElementById('results')
+    const state = { all: [], filtered: [], dataDate: '', localidad: null };
+
+    const els = {
+      restaurant: document.getElementById('restaurant'),
+      dish: document.getElementById('dish'),
+      price: document.getElementById('price'),
+      updatedOnly: document.getElementById('updatedOnly'),
+      withDrink: document.getElementById('withDrink'),
+      withBread: document.getElementById('withBread'),
+      results: document.getElementById('results'),
+      countLabel: document.getElementById('countLabel'),
+      dateLabel: document.getElementById('dateLabel'),
+      locationLabel: document.getElementById('locationLabel')
     };
-    function normalise(v){
-      return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+    function normalise(value) {
+      return String(value || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
     }
-    function extractDishes(m){
-      if(Array.isArray(m.platos)&&m.platos.length)return m.platos.filter(Boolean);
-      const d=[];
-      ['primeros','segundos','postre','postres'].forEach(k=>{
-        if(Array.isArray(m[k]))d.push(...m[k]);
-      });
-      return d.filter(Boolean);
+
+    function formatDate(value) {
+      if (!value) return '';
+      const parts = String(value).split('-');
+      if (parts.length !== 3) return value;
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
-    function name(m){
-      return m.restaurante||m.nombre||'Restaurante';
+
+    function numberFromPrice(value) {
+      if (typeof value === 'number') return value;
+      const cleaned = String(value || '').replace(',', '.').replace(/[^0-9.]/g, '');
+      return Number(cleaned || 0);
     }
-    function url(m){
-      return m.url||(m.slug?`../restaurantes/${m.slug}/`:'#');
+
+    function array(value) {
+      return Array.isArray(value) ? value : [];
     }
-    function priceText(m){
-      const d=m.precio_desde;
-      const h=m.precio_hasta;
-      if(d&&h&&d!==h)return `${d}–${h} €`;
-      if(h)return `${h} €`;
-      if(d)return `${d} €`;
-      return 'Precio no indicado';
+
+    function collectMenuText(menu) {
+      return [
+        menu.nombre,
+        menu.precio,
+        menu.descripcion,
+        ...array(menu.primeros),
+        ...array(menu.segundos),
+        ...array(menu.postre),
+        ...array(menu.platos),
+        ...array(menu.incluye)
+      ].join(' ');
     }
-    function today(v){
-      if(!v)return false;
-      const t=new Date();
-      const y=t.getFullYear();
-      const m=String(t.getMonth()+1).padStart(2,'0');
-      const d=String(t.getDate()).padStart(2,'0');
-      return String(v).slice(0,10)===`${y}-${m}-${d}`;
+
+    function collectEntryText(entry) {
+      const base = [
+        entry.restaurante.nombre,
+        entry.restaurante.categoria_cocina,
+        entry.menu.titulo,
+        entry.menu.descripcion,
+        ...array(entry.menu.primeros),
+        ...array(entry.menu.segundos),
+        ...array(entry.menu.postre),
+        ...array(entry.menu.platos),
+        ...array(entry.menu.incluye),
+        ...array(entry.menu.etiquetas)
+      ];
+
+      for (const sub of array(entry.menu.menus)) {
+        base.push(collectMenuText(sub));
+      }
+
+      return base.join(' ');
     }
-    function text(m){
-      return normalise([
-        name(m),
-        m.titulo_menu,
-        m.municipio,
-        m.categoria,
-        m.descripcion,
-        ...(m.keywords||[]),
-        ...(m.etiquetas||[]),
-        ...(m.incluye||[]),
-        ...extractDishes(m)
-      ].join(' '));
+
+    function menuPrice(menu) {
+      return Number(menu.precio_valor || numberFromPrice(menu.precio));
     }
-    function apply(){
-      const r=normalise(els.restaurant.value);
-      const dish=normalise(els.dish.value);
-      const max=Number(els.price.value||0);
-      state.filtered=state.menus.filter(m=>{
-        const n=normalise(name(m));
-        const tx=text(m);
-        const p=Number(m.precio_hasta||m.precio_desde||0);
-        if(r&&!n.includes(r))return false;
-        if(dish&&!tx.includes(dish))return false;
-        if(max&&p&&p>max)return false;
-        if(els.updatedOnly.checked&&!today(m.fecha_menu))return false;
-        if(els.withDrink.checked&&!m.bebida_incluida)return false;
-        if(els.withBread.checked&&!m.pan_incluido)return false;
+
+    function entrySinglePrice(entry) {
+      return Number(entry.menu.precio_valor || numberFromPrice(entry.menu.precio));
+    }
+
+    function entryMinimumPrice(entry) {
+      if (entry.menu.tipo === 'multiple' && array(entry.menu.menus).length) {
+        const prices = entry.menu.menus.map(menuPrice).filter(price => price > 0);
+        return prices.length ? Math.min(...prices) : 0;
+      }
+
+      return entrySinglePrice(entry);
+    }
+
+    function entryIncludes(entry, word) {
+      const entryInclude = array(entry.menu.incluye).map(normalise);
+      const subInclude = array(entry.menu.menus).flatMap(menu => array(menu.incluye)).map(normalise);
+      return [...entryInclude, ...subInclude].includes(word);
+    }
+
+    function matchingSubmenus(entry, filters) {
+      const submenus = array(entry.menu.menus);
+      if (entry.menu.tipo !== 'multiple' || !submenus.length) return [];
+
+      return submenus.filter(menu => {
+        const price = menuPrice(menu);
+        const text = normalise(collectMenuText(menu));
+        const include = array(menu.incluye).map(normalise);
+
+        if (filters.maxPrice && price && price > filters.maxPrice) return false;
+        if (filters.dish && !text.includes(filters.dish)) return false;
+        if (filters.withDrink && !include.includes('bebida')) return false;
+        if (filters.withBread && !include.includes('pan')) return false;
+
         return true;
       });
-      render();
     }
-    function esc(v){
-      return String(v||'')
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
+
+    function entryPasses(entry, filters) {
+      const restaurantName = normalise(entry.restaurante.nombre);
+      const fullText = normalise(collectEntryText(entry));
+
+      if (filters.restaurant && !restaurantName.includes(filters.restaurant)) return false;
+
+      if (entry.menu.tipo === 'multiple') {
+        const matches = matchingSubmenus(entry, filters);
+        if (filters.maxPrice || filters.dish || filters.withDrink || filters.withBread) {
+          return matches.length > 0;
+        }
+        return true;
+      }
+
+      const price = entrySinglePrice(entry);
+      if (filters.dish && !fullText.includes(filters.dish)) return false;
+      if (filters.maxPrice && price && price > filters.maxPrice) return false;
+      if (filters.withDrink && !entryIncludes(entry, 'bebida')) return false;
+      if (filters.withBread && !entryIncludes(entry, 'pan')) return false;
+
+      return true;
     }
-    function render(){
-      const c=state.filtered.length;
-      els.summary.textContent=c===1?'1 menú encontrado':`${c} menús encontrados`;
-      if(!c){
-        els.results.innerHTML='<div class="empty">No hay resultados con esos criterios. Prueba a cambiar plato, restaurante o precio máximo.</div>';
+
+    function getFilters() {
+      return {
+        restaurant: normalise(els.restaurant.value),
+        dish: normalise(els.dish.value),
+        maxPrice: Number(els.price.value || 0),
+        updatedOnly: els.updatedOnly.checked,
+        withDrink: els.withDrink.checked,
+        withBread: els.withBread.checked
+      };
+    }
+
+    function apply() {
+      const filters = getFilters();
+
+      state.filtered = state.all.filter(entry => {
+        if (filters.updatedOnly && entry.fecha_menu && state.dataDate && entry.fecha_menu !== state.dataDate) return false;
+        return entryPasses(entry, filters);
+      });
+
+      render(filters);
+    }
+
+    function esc(value) {
+      return String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function listHtml(items) {
+      const safe = array(items).filter(Boolean);
+      if (!safe.length) return '';
+      return `<ul>${safe.map(item => `<li>${esc(item)}</li>`).join('')}</ul>`;
+    }
+
+    function menuColumnsHtml(menu) {
+      const blocks = [];
+
+      if (array(menu.primeros).length) {
+        blocks.push(`<div><p class="section-title">Primeros</p>${listHtml(menu.primeros)}</div>`);
+      }
+
+      if (array(menu.segundos).length) {
+        blocks.push(`<div><p class="section-title">Segundos</p>${listHtml(menu.segundos)}</div>`);
+      }
+
+      if (array(menu.postre).length) {
+        blocks.push(`<div><p class="section-title">Postre</p>${listHtml(menu.postre)}</div>`);
+      }
+
+      if (!blocks.length && array(menu.platos).length) {
+        blocks.push(`<div><p class="section-title">Platos</p>${listHtml(menu.platos)}</div>`);
+      }
+
+      return blocks.length ? `<div class="columns">${blocks.join('')}</div>` : '';
+    }
+
+    function includedHtml(menu) {
+      const included = array(menu.incluye);
+      if (included.length) return `<p class="included">Incluye ${esc(included.join(', ').toLowerCase())}.</p>`;
+      if (menu.descripcion) return `<p class="included">${esc(menu.descripcion)}</p>`;
+      return '';
+    }
+
+    function singleMenuHtml(entry) {
+      const menu = entry.menu;
+      const name = menu.titulo || menu.nombre || 'Menú del día';
+      const price = menu.precio || (menu.precio_valor ? `${menu.precio_valor} €` : '');
+
+      return `
+        <div class="menu-block">
+          <div class="menu-head">
+            <div class="menu-name">${esc(name)}</div>
+            ${price ? `<div class="menu-price">${esc(price)}</div>` : ''}
+          </div>
+          ${menuColumnsHtml(menu)}
+          ${includedHtml(menu)}
+        </div>
+      `;
+    }
+
+    function multipleMenusHtml(entry, filters) {
+      const allSubmenus = array(entry.menu.menus);
+      const matches = matchingSubmenus(entry, filters);
+      const shouldLimit = filters.maxPrice || filters.dish || filters.withDrink || filters.withBread;
+      const visibleMenus = shouldLimit ? matches : allSubmenus;
+
+      return visibleMenus.map(menu => `
+        <div class="menu-block">
+          <div class="menu-head">
+            <div class="menu-name">${esc(menu.nombre || 'Menú')}</div>
+            ${menu.precio ? `<div class="menu-price">${esc(menu.precio)}</div>` : ''}
+          </div>
+          ${menuColumnsHtml(menu)}
+          ${includedHtml(menu)}
+          ${shouldLimit ? `<div class="match">Cumple por: ${esc(menu.nombre || 'Menú')} ${menu.precio ? '· ' + esc(menu.precio) : ''}</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function typeLabel(type) {
+      if (type === 'plato_del_dia') return 'Plato del día';
+      if (type === 'multiple') return 'Varios menús';
+      return 'Menú simple';
+    }
+
+    function cardHtml(entry, filters) {
+      const restaurant = entry.restaurante;
+      const isMultiple = entry.menu.tipo === 'multiple' && array(entry.menu.menus).length;
+      const menuHtml = isMultiple ? multipleMenusHtml(entry, filters) : singleMenuHtml(entry);
+      const minPrice = entryMinimumPrice(entry);
+
+      return `
+        <article class="card">
+          <div>
+            <h2>${esc(restaurant.nombre)}</h2>
+            <div class="meta">
+              ${restaurant.direccion ? `<span class="pill">📍 ${esc(restaurant.direccion)}</span>` : ''}
+              ${restaurant.categoria_cocina ? `<span class="pill">🍲 ${esc(restaurant.categoria_cocina)}</span>` : ''}
+              ${minPrice ? `<span class="pill">Desde ${esc(String(minPrice).replace('.', ','))} €</span>` : ''}
+              ${entry.menu.tipo ? `<span class="pill">${esc(typeLabel(entry.menu.tipo))}</span>` : ''}
+            </div>
+            <div class="menus">${menuHtml}</div>
+          </div>
+          <div class="actions">
+            <a class="button" href="${esc(restaurant.url_publica || '#')}">Ver ficha</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function render(filters = getFilters()) {
+      els.countLabel.textContent = `${state.filtered.length} resultado${state.filtered.length === 1 ? '' : 's'}`;
+
+      if (!state.filtered.length) {
+        els.results.innerHTML = `<div class="empty">No hay menús que cumplan esos filtros. Prueba con otro plato, restaurante o precio.</div>`;
         return;
       }
-      els.results.innerHTML=state.filtered.map(m=>{
-        const dishes=extractDishes(m).slice(0,5);
-        const lis=dishes.length
-          ? dishes.map(d=>`<li>${esc(d)}</li>`).join('')
-          : '<li>Menú del día disponible</li>';
-        return `<article class="card"><h3>${esc(name(m))}</h3><div class="meta">${esc(m.municipio||'Municipio demo')} · ${esc(m.titulo_menu||'Menú del día')}</div><div class="price">${esc(priceText(m))}</div><ul class="dishes">${lis}</ul><a class="detail" href="${esc(url(m))}">Ver detalle</a></article>`;
-      }).join('');
+
+      els.results.innerHTML = state.filtered.map(entry => cardHtml(entry, filters)).join('');
     }
-    async function load(){
-      try{
-        const res=await fetch('../data/menus-hoy/hoyo-de-manzanares.json',{cache:'no-store'});
-        if(!res.ok)throw new Error('No se pudo cargar el JSON');
-        const data=await res.json();
-        const localidad=data.localidad||{};
-        state.menus=(data.menus||[]).map(item=>{
-          const r=item.restaurante||{};
-          const m=item.menu||{};
-          const primeros=Array.isArray(m.primeros)?m.primeros:[];
-          const segundos=Array.isArray(m.segundos)?m.segundos:[];
-          const postre=Array.isArray(m.postre)?m.postre:[];
-          const incluye=Array.isArray(m.incluye)?m.incluye:[];
-          const platosDirectos=Array.isArray(m.platos)?m.platos:[];
-          const platos=platosDirectos.length
-            ? platosDirectos
-            : [...primeros,...segundos,...postre];
-          const incluyeTexto=incluye.map(x=>normalise(x));
-          return {
-            restaurante:r.nombre||'Restaurante',
-            nombre:r.nombre||'Restaurante',
-            slug:r.slug||'',
-            url:r.url_publica||(r.slug?`../restaurantes/${r.slug}/`:'#'),
-            municipio:localidad.nombre||'',
-            categoria:r.categoria_cocina||'',
-            titulo_menu:m.titulo||'Menú del día',
-            fecha_menu:data.fecha||'',
-            precio_desde:m.precio_desde,
-            precio_hasta:m.precio_hasta,
-            platos:platos,
-            primeros:primeros,
-            segundos:segundos,
-            postre:postre,
-            incluye:incluye,
-            etiquetas:Array.isArray(m.etiquetas)?m.etiquetas:[],
-            descripcion:m.descripcion||'',
-            bebida_incluida:incluyeTexto.includes('bebida'),
-            pan_incluido:incluyeTexto.includes('pan')
-          };
-        });
-        state.filtered=[...state.menus];
+
+    function mapEntry(item, data) {
+      const restaurant = item.restaurante || {};
+      const menu = item.menu || {};
+
+      return {
+        restaurante: {
+          nombre: restaurant.nombre || 'Restaurante',
+          slug: restaurant.slug || '',
+          direccion: restaurant.direccion || '',
+          telefono_publico: restaurant.telefono_publico || '',
+          categoria_cocina: restaurant.categoria_cocina || '',
+          url_publica: restaurant.url_publica || (restaurant.slug ? `../restaurantes/${restaurant.slug}/` : '#')
+        },
+        menu: {
+          id: menu.id || '',
+          titulo: menu.titulo || 'Menú del día',
+          estado: menu.estado || '',
+          tipo: menu.tipo || 'simple',
+          precio: menu.precio || '',
+          precio_valor: Number(menu.precio_valor || numberFromPrice(menu.precio)),
+          descripcion: menu.descripcion || '',
+          primeros: array(menu.primeros),
+          segundos: array(menu.segundos),
+          postre: array(menu.postre),
+          platos: array(menu.platos),
+          incluye: array(menu.incluye),
+          etiquetas: array(menu.etiquetas),
+          menus: array(menu.menus).map(submenu => ({
+            nombre: submenu.nombre || 'Menú',
+            precio: submenu.precio || '',
+            precio_valor: Number(submenu.precio_valor || numberFromPrice(submenu.precio)),
+            descripcion: submenu.descripcion || '',
+            primeros: array(submenu.primeros),
+            segundos: array(submenu.segundos),
+            postre: array(submenu.postre),
+            platos: array(submenu.platos),
+            incluye: array(submenu.incluye)
+          }))
+        },
+        fecha_menu: menu.fecha || data.fecha || ''
+      };
+    }
+
+    async function load() {
+      try {
+        const response = await fetch('../data/menus-hoy/hoyo-de-manzanares.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`No se pudo cargar el JSON público: ${response.status}`);
+
+        const data = await response.json();
+        state.localidad = data.localidad || null;
+        state.dataDate = data.fecha || '';
+        state.all = array(data.menus).map(item => mapEntry(item, data));
+        state.filtered = [...state.all];
+
+        if (state.localidad && state.localidad.nombre) {
+          els.locationLabel.textContent = `Menús en ${state.localidad.nombre}`;
+        }
+
+        if (state.dataDate) {
+          els.dateLabel.textContent = `Fecha: ${formatDate(state.dataDate)}`;
+        }
+
         render();
-      }catch(e){
-        els.summary.textContent='No se pudieron cargar los menús';
-        els.results.innerHTML='<div class="empty">Revisa que exista el archivo <strong>data/menus-hoy/hoyo-de-manzanares.json</strong>.</div>';
-        console.error(e);
+      } catch (error) {
+        els.countLabel.textContent = 'Error al cargar menús';
+        els.results.innerHTML = `
+          <div class="error">
+            No se pudo cargar el buscador. Revisa el archivo JSON público o la ruta de datos.<br><br>
+            Detalle: ${esc(error.message)}
+          </div>
+        `;
       }
     }
-    els.form.addEventListener('submit',e=>{
-      e.preventDefault();
-      apply();
-    });
-    [els.restaurant,els.dish,els.price,els.updatedOnly,els.withDrink,els.withBread].forEach(el=>{
-      el.addEventListener('input',apply);
-      el.addEventListener('change',apply);
-    });
-    els.clear.addEventListener('click',()=>{
-      els.restaurant.value='';
-      els.dish.value='';
-      els.price.value='';
-      els.updatedOnly.checked=false;
-      els.withDrink.checked=false;
-      els.withBread.checked=false;
-      apply();
-    });
+
+    for (const input of [els.restaurant, els.dish, els.price, els.updatedOnly, els.withDrink, els.withBread]) {
+      input.addEventListener('input', apply);
+      input.addEventListener('change', apply);
+    }
+
     load();
   </script>
 </body>
