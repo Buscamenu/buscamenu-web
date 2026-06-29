@@ -3,8 +3,8 @@
     "nombre": "Hoyo de Manzanares",
     "slug": "hoyo-de-manzanares"
   },
-  "fecha": "2026-06-27",
-  "ultima_actualizacion": "2026-06-27T21:10:00",
+  "fecha": "2026-06-29",
+  "ultima_actualizacion": "2026-06-29T11:45:00",
   "menus": [
     {
       "restaurante": {
@@ -16,42 +16,51 @@
         "url_publica": "/restaurantes/casa-pepe-demo/"
       },
       "menu": {
-        "id": "casa-pepe-demo_2026-06-27",
+        "id": "casa-pepe-demo_2026-06-25",
         "titulo": "Menú del día",
         "estado": "publicado",
-        "precio_desde": 12,
-        "precio_hasta": 12,
+        "precio_desde": 12.5,
+        "precio_hasta": 12.5,
         "tiene_menu_hoy": true,
         "tipo": "simple",
         "primeros": [
-          "Lentejas",
-          "Ensalada"
+          "Ensalada mixta",
+          "Lentejas caseras",
+          "Macarrones con tomate"
         ],
         "segundos": [
-          "Pollo al ajillo",
-          "Merluza"
+          "Pollo asado",
+          "Merluza rebozada",
+          "Filete con patatas"
         ],
         "postre": [
           "Postre o café"
         ],
         "incluye": [
-          "Postre o café"
+          "Pan",
+          "Bebida"
         ],
         "platos": [
-          "Lentejas",
-          "Ensalada",
-          "Pollo al ajillo",
-          "Merluza",
+          "Ensalada mixta",
+          "Lentejas caseras",
+          "Macarrones con tomate",
+          "Pollo asado",
+          "Merluza rebozada",
+          "Filete con patatas",
           "Postre o café"
         ],
         "etiquetas": [
+          "simple",
           "menu del dia",
           "cocina casera",
-          "lentejas",
           "ensalada",
+          "lentejas",
+          "macarrones",
           "pollo",
           "merluza",
-          "postre o cafe"
+          "postre o cafe",
+          "pan",
+          "bebida"
         ]
       }
     },
@@ -61,17 +70,17 @@
         "slug": "focaccia-demo",
         "direccion": "Centro de Hoyo de Manzanares",
         "telefono_publico": "910000002",
-        "categoria_cocina": "Plato destacado",
+        "categoria_cocina": "Plato del día",
         "url_publica": "/restaurantes/focaccia-demo/"
       },
       "menu": {
         "id": "focaccia-demo_2026-06-27",
-        "titulo": "Plato destacado",
+        "titulo": "Plato del día",
         "estado": "publicado",
         "precio_desde": 9.5,
         "precio_hasta": 9.5,
         "tiene_menu_hoy": true,
-        "tipo": "plato_destacado",
+        "tipo": "plato_del_dia",
         "primeros": [],
         "segundos": [],
         "postre": [],
@@ -81,7 +90,7 @@
         ],
         "descripcion": "Focaccia con burrata, pesto, rúcula y mortadela.",
         "etiquetas": [
-          "plato destacado",
+          "plato del dia",
           "focaccia",
           "burrata",
           "pesto",
