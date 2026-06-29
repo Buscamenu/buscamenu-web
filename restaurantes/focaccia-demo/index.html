@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Focaccia Demo · Buscamenú</title>
-  <meta name="description" content="Plato destacado de Focaccia Demo en Hoyo de Manzanares.">
+  <meta name="description" content="Plato del día de Focaccia Demo en Hoyo de Manzanares.">
 
   <style>
     :root {
@@ -305,24 +304,28 @@
       line-height: 1;
     }
 
-    .single-dish {
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .menu-section {
       background: #fff;
       border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 24px;
+      border-radius: 18px;
+      padding: 18px;
     }
 
-    .single-dish h3 {
-      margin: 0 0 12px;
-      font-size: 26px;
-      letter-spacing: -.03em;
+    .menu-section h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
     }
 
-    .single-dish p {
+    .menu-section ul {
       margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 18px;
+      padding-left: 20px;
+      line-height: 1.75;
     }
 
     .included {
@@ -363,7 +366,8 @@
 
     @media (max-width: 840px) {
       .hero,
-      .content {
+      .content,
+      .menu-grid {
         grid-template-columns: 1fr;
       }
 
@@ -394,19 +398,19 @@
         <div>
           <div class="badge-row">
             <span class="badge">📍 Hoyo de Manzanares</span>
-            <span class="badge">🥪 Plato destacado</span>
+            <span class="badge">🥪 Plato del día</span>
             <span class="badge">9,50 €</span>
           </div>
 
           <h1>Focaccia Demo</h1>
 
           <p class="subtitle">
-            Ficha de prueba para un caso distinto al menú clásico: un plato destacado,
-            útil para bares, cafeterías o locales con oferta corta del día.
+            Ficha de prueba de Buscamenú para un restaurante que publica un plato del día
+            en lugar de un menú clásico completo.
           </p>
         </div>
 
-        <div class="status">✅ Plato disponible hoy</div>
+        <div class="status">✅ Plato del día disponible</div>
       </article>
 
       <aside class="image-card">
@@ -447,7 +451,7 @@
         </div>
 
         <nav class="actions" aria-label="Acciones del restaurante">
-          <a class="button primary" href="#">💬 Contactar por WhatsApp</a>
+          <a class="button primary" href="https://wa.me/34600000002">💬 Reservar por WhatsApp</a>
           <a class="button accent" href="tel:910000002">📞 Llamar</a>
           <a class="button" href="https://maps.google.com" target="_blank" rel="noopener">🗺️ Ver en Google Maps</a>
           <a class="button" href="#">📋 Ver carta</a>
@@ -455,28 +459,29 @@
       </aside>
 
       <article class="menu-card">
-        <section class="menu-dia">
+        <!-- MENU START -->
+        <section class="menu-dia" data-menu-id="focaccia-demo_2026-06-27">
           <div class="menu-title-row">
             <div>
               <p class="eyebrow">Plato de hoy</p>
-              <h2>Plato destacado</h2>
+              <h2>Plato del día</h2>
             </div>
 
             <div class="price">9,50 €</div>
           </div>
 
-          <div class="single-dish">
-            <h3>Focaccia de burrata</h3>
-            <p>
-              Focaccia con burrata, pesto, rúcula y mortadela. Una opción sencilla,
-              directa y fácilmente buscable por ingredientes.
-            </p>
+          <div class="menu-grid">
+            <div class="menu-section">
+              <h3>Plato del día</h3>
+              <ul>
+                <li>Focaccia de burrata</li>
+              </ul>
+            </div>
           </div>
 
-          <p class="included">
-            Caso de prueba para búsquedas como “burrata”, “focaccia”, “pesto” o “menos de 10 €”.
-          </p>
+          <p class="included">Focaccia con burrata, pesto, rúcula y mortadela.</p>
         </section>
+        <!-- MENU END -->
       </article>
     </section>
 
@@ -485,14 +490,14 @@
 
       <div class="history-items">
         <div class="history-item">
-          <span>Próximamente se mostrarán aquí menús recientes del restaurante.</span>
+          <span>Próximamente se mostrarán aquí platos y menús recientes del restaurante.</span>
           <strong>Demo</strong>
         </div>
       </div>
     </section>
 
     <footer>
-      Página demo generada para comprobar el flujo: buscador → resultado → ficha pública.
+      Página demo generada para comprobar el flujo: Airtable → plantilla → ficha pública.
     </footer>
   </main>
 </body>
