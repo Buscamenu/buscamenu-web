@@ -1,10 +1,11 @@
+
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pivo Demo · Buscamenú</title>
-  <meta name="description" content="Pivo Demo, menús del día en Hoyo de Manzanares.">
+  <meta name="description" content="Pivo Demo, menú del día en Hoyo de Manzanares.">
 
   <style>
     :root {
@@ -196,6 +197,15 @@
       color: var(--muted);
     }
 
+    .restaurant-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
     .content {
       display: grid;
       grid-template-columns: .85fr 1.15fr;
@@ -329,7 +339,8 @@
       line-height: 1.75;
     }
 
-    .included {
+    .included,
+    .notice {
       margin: 18px 0 0;
       padding: 14px 16px;
       border-radius: 16px;
@@ -399,28 +410,28 @@
         <div>
           <div class="badge-row">
             <span class="badge">📍 Hoyo de Manzanares</span>
-            <span class="badge">🍺 Bar restaurante</span>
-            <span class="badge">Menús actualizados</span>
+            <span class="badge">🍲 bar restaurante</span>
+            <span class="badge">Menú actualizado</span>
           </div>
 
           <h1>Pivo Demo</h1>
 
           <p class="subtitle">
-            Restaurante demo con dos menús disponibles: menú del día y menú ejecutivo.
+            Restaurante demo con menú variado y platos de temporada.
           </p>
         </div>
 
-        <div class="status">✅ Menús del día disponibles</div>
+        <div class="status">Menú del día</div>
       </article>
 
       <aside class="image-card">
         <div class="generic-image">
-          <div>
-            <div class="icon">🍺</div>
-            <h2>Pivo Demo</h2>
-            <p>Imagen genérica Buscamenú hasta que el restaurante suba foto o logo.</p>
-          </div>
-        </div>
+  <div>
+    <div class="icon">🍽️</div>
+    <h2>Pivo Demo</h2>
+    <p>Imagen genérica Buscamenú</p>
+  </div>
+</div>
       </aside>
     </section>
 
@@ -441,122 +452,113 @@
 
           <div class="detail">
             <span>Teléfono público</span>
-            <strong>910000002</strong>
+            <strong>910 000 002</strong>
           </div>
 
-          <div class="detail">
-            <span>Identificador público</span>
-            <strong>pivo-demo</strong>
-          </div>
+         
         </div>
 
         <nav class="actions" aria-label="Acciones del restaurante">
-          <a class="button primary" href="https://wa.me/34600000002">💬 Reservar por WhatsApp</a>
-          <a class="button accent" href="tel:910000002">📞 Llamar</a>
-          <a class="button" href="https://maps.google.com/?q=Avenida+de+la+Paloma+12+Hoyo+de+Manzanares" target="_blank" rel="noopener">🗺️ Ver en Google Maps</a>
-          <a class="button" href="#">📋 Ver carta</a>
+          <a class="button primary" href="https://wa.me/34600000002">Escribir por WhatsApp</a>
+          <a class="button " href="tel:910000002">Llamar</a>
+          <a class="button " href="https://maps.google.com/?q=Avenida+de+la+Paloma+12+Hoyo+de+Manzanares">Ver en Google Maps</a>
+          
         </nav>
       </aside>
 
       <article class="menu-card">
-        <!-- MENU START -->
-        <div data-menu-id="pivo-demo_2026-06-27">
-          <section class="menu-dia">
-            <div class="menu-title-row">
-              <div>
-                <p class="eyebrow">Menú de hoy</p>
-                <h2>Menú del día</h2>
-              </div>
+        <section class="menu-dia">
+  <div class="menu-title-row">
+    <div>
+      <p class="eyebrow">Menú de hoy</p>
+      <h2>Menú del día</h2>
+    </div>
+    <div class="price">14 €</div>
+  </div>
 
-              <div class="price">14 €</div>
-            </div>
+  <div class="menu-grid">
+    <section class="menu-section">
+      <h3>Primeros</h3>
+      <ul>
+        <li>Salmorejo</li>
+        <li>Arroz de verduras</li>
+        <li>Ensalada de tomate</li>
+      </ul>
+    </section>
 
-            <div class="menu-grid">
-              <div class="menu-section">
-                <h3>Primeros</h3>
-                <ul>
-                  <li>Salmorejo</li>
-                  <li>Arroz de verduras</li>
-                  <li>Ensalada de tomate</li>
-                </ul>
-              </div>
+    <section class="menu-section">
+      <h3>Segundos</h3>
+      <ul>
+        <li>Hamburguesa casera</li>
+        <li>Pollo al ajillo</li>
+      </ul>
+    </section>
 
-              <div class="menu-section">
-                <h3>Segundos</h3>
-                <ul>
-                  <li>Hamburguesa casera</li>
-                  <li>Pollo al ajillo</li>
-                </ul>
-              </div>
+    <section class="menu-section">
+      <h3>Postres</h3>
+      <ul>
+        <li>Yogur</li>
+        <li>Fruta de temporada</li>
+      </ul>
+    </section>
+  </div>
 
-              <div class="menu-section">
-                <h3>Postres</h3>
-                <ul>
-                  <li>Yogur</li>
-                  <li>Fruta de temporada</li>
-                </ul>
-              </div>
-            </div>
+  <div class="included">Incluye pan, bebida.</div>
+</section>
 
-            <p class="included">Incluye pan y bebida.</p>
-          </section>
+<section class="menu-dia">
+  <div class="menu-title-row">
+    <div>
+      <p class="eyebrow">Menú de hoy</p>
+      <h2>Menú ejecutivo</h2>
+    </div>
+    <div class="price">16 €</div>
+  </div>
 
-          <section class="menu-dia">
-            <div class="menu-title-row">
-              <div>
-                <p class="eyebrow">Menú de hoy</p>
-                <h2>Menú ejecutivo</h2>
-              </div>
+  <div class="menu-grid">
+    <section class="menu-section">
+      <h3>Primeros</h3>
+      <ul>
+        <li>Ensalada templada</li>
+        <li>Crema de verduras</li>
+      </ul>
+    </section>
 
-              <div class="price">16 €</div>
-            </div>
+    <section class="menu-section">
+      <h3>Segundos</h3>
+      <ul>
+        <li>Salmón a la plancha</li>
+        <li>Secreto ibérico</li>
+      </ul>
+    </section>
 
-            <div class="menu-grid">
-              <div class="menu-section">
-                <h3>Primeros</h3>
-                <ul>
-                  <li>Ensalada templada</li>
-                  <li>Crema de verduras</li>
-                </ul>
-              </div>
+    <section class="menu-section">
+      <h3>Postres</h3>
+      <ul>
+        <li>Tarta de queso</li>
+        <li>Café</li>
+      </ul>
+    </section>
+  </div>
 
-              <div class="menu-section">
-                <h3>Segundos</h3>
-                <ul>
-                  <li>Salmón a la plancha</li>
-                  <li>Secreto ibérico</li>
-                </ul>
-              </div>
-
-              <div class="menu-section">
-                <h3>Postres</h3>
-                <ul>
-                  <li>Tarta de queso</li>
-                  <li>Café</li>
-                </ul>
-              </div>
-            </div>
-
-            <p class="included">Incluye pan, bebida y café.</p>
-          </section>
-        </div>
-        <!-- MENU END -->
+  <div class="included">Incluye pan, bebida, café.</div>
+</section>
       </article>
     </section>
 
     <section class="history-card">
-      <h2>Histórico / carrusel de menús</h2>
+  <h2>Menús anteriores</h2>
 
-      <div class="history-items">
-        <div class="history-item">
-          <span>Próximamente se mostrarán aquí menús recientes del restaurante.</span>
-          <strong>Demo</strong>
-        </div>
-      </div>
-    </section>
+  <div class="history-items">
+    <div class="history-item">
+      <span>Pronto podrás consultar aquí los últimos menús publicados por este restaurante.</span>
+      <strong>En preparación</strong>
+    </div>
+  </div>
+</section>
 
     <footer>
-      Página demo generada para comprobar el flujo: Airtable → plantilla → ficha pública.
+      Buscamenú · Menús del día en Hoyo de Manzanares.
     </footer>
   </main>
 </body>
