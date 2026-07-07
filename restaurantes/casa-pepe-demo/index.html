@@ -1,14 +1,16 @@
+
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Casa Pepe Demo · Buscamenú</title>
-  <meta name="description" content="Menú del día de Casa Pepe Demo en Hoyo de Manzanares.">
+  <meta name="description" content="Casa Pepe Demo, menú del día en Hoyo de Manzanares.">
 
   <style>
     :root {
       --bg: #f6f1e8;
+      --card: #fffaf2;
       --ink: #2f241b;
       --muted: #7a685a;
       --line: #e4d5c4;
@@ -195,6 +197,15 @@
       color: var(--muted);
     }
 
+    .restaurant-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
     .content {
       display: grid;
       grid-template-columns: .85fr 1.15fr;
@@ -301,6 +312,7 @@
       border-radius: 18px;
       padding: 12px 16px;
       line-height: 1;
+      white-space: nowrap;
     }
 
     .menu-grid {
@@ -327,7 +339,8 @@
       line-height: 1.75;
     }
 
-    .included {
+    .included,
+    .notice {
       margin: 18px 0 0;
       padding: 14px 16px;
       border-radius: 16px;
@@ -389,7 +402,7 @@
         <div class="brand-mark">🍽️</div>
         <div>Buscamenú</div>
       </div>
-      <div class="crumb">Demo · Hoyo de Manzanares</div>
+      <div class="crumb">Ficha de restaurante · Hoyo de Manzanares</div>
     </header>
 
     <section class="hero">
@@ -397,29 +410,28 @@
         <div>
           <div class="badge-row">
             <span class="badge">📍 Hoyo de Manzanares</span>
-            <span class="badge">🍲 Cocina casera</span>
-            <span class="badge">Menú publicado hoy</span>
+            <span class="badge">🍲 cocina tradicional</span>
+            <span class="badge">Menú actualizado</span>
           </div>
 
           <h1>Casa Pepe Demo</h1>
 
           <p class="subtitle">
-            Ficha de prueba de Buscamenú generada a partir de los datos de restaurante,
-            menú y publicación preparados en Airtable.
+            Restaurante demo de cocina casera y menú del día.
           </p>
         </div>
 
-        <div class="status">✅ Menú del día disponible</div>
+        <div class="status">Menú del día disponible</div>
       </article>
 
       <aside class="image-card">
         <div class="generic-image">
-          <div>
-            <div class="icon">🍽️</div>
-            <h2>Casa Pepe Demo</h2>
-            <p>Imagen genérica Buscamenú hasta que el restaurante suba foto o logo.</p>
-          </div>
-        </div>
+  <div>
+    <div class="icon">🍽️</div>
+    <h2>Casa Pepe Demo</h2>
+    <p>Imagen genérica Buscamenú</p>
+  </div>
+</div>
       </aside>
     </section>
 
@@ -440,81 +452,75 @@
 
           <div class="detail">
             <span>Teléfono público</span>
-            <strong>910000000</strong>
+            <strong>910 000 001</strong>
           </div>
 
-          <div class="detail">
-            <span>Identificador público</span>
-            <strong>casa-pepe-demo</strong>
-          </div>
         </div>
 
         <nav class="actions" aria-label="Acciones del restaurante">
-          <a class="button primary" href="https://wa.me/34600000000">💬 Reservar por WhatsApp</a>
-          <a class="button accent" href="tel:910000000">📞 Llamar</a>
-          <a class="button" href="https://maps.google.com" target="_blank" rel="noopener">🗺️ Ver en Google Maps</a>
-          <a class="button" href="#">📋 Ver carta</a>
+          <a class="button primary" href="https://wa.me/34600000001">Escribir por WhatsApp</a>
+          <a class="button " href="tel:910000001">Llamar</a>
+          <a class="button " href="https://maps.google.com/?q=Plaza+Mayor+1+Hoyo+de+Manzanares">Ver en Google Maps</a>
+          
         </nav>
       </aside>
 
       <article class="menu-card">
-        <!-- MENU START -->
-        <section class="menu-dia" data-menu-id="casa-pepe-demo_2026-06-25">
-          <div class="menu-title-row">
-            <div>
-              <p class="eyebrow">Menú de hoy</p>
-              <h2>Menú del día</h2>
-            </div>
+        <section class="menu-dia">
+  <div class="menu-title-row">
+    <div>
+      <p class="eyebrow">Menú de hoy</p>
+      <h2>Menú del día</h2>
+    </div>
+    <div class="price">12,5 €</div>
+  </div>
 
-            <div class="price">12,50 €</div>
-          </div>
+  <div class="menu-grid">
+    <section class="menu-section">
+      <h3>Primeros</h3>
+      <ul>
+        <li>Lentejas estofadas</li>
+        <li>Ensalada mixta</li>
+        <li>Gazpacho</li>
+      </ul>
+    </section>
 
-          <div class="menu-grid">
-            <div class="menu-section">
-              <h3>Primeros</h3>
-              <ul>
-                <li>Ensalada mixta</li>
-                <li>Lentejas caseras</li>
-                <li>Macarrones con tomate</li>
-              </ul>
-            </div>
+    <section class="menu-section">
+      <h3>Segundos</h3>
+      <ul>
+        <li>Pollo asado con patatas</li>
+        <li>Merluza a la romana</li>
+        <li>Albóndigas en salsa</li>
+      </ul>
+    </section>
 
-            <div class="menu-section">
-              <h3>Segundos</h3>
-              <ul>
-                <li>Pollo asado</li>
-                <li>Merluza rebozada</li>
-                <li>Filete con patatas</li>
-              </ul>
-            </div>
+    <section class="menu-section">
+      <h3>Postres</h3>
+      <ul>
+        <li>Flan casero</li>
+        <li>Fruta del día</li>
+      </ul>
+    </section>
+  </div>
 
-            <div class="menu-section">
-              <h3>Postre</h3>
-              <ul>
-                <li>Postre o café</li>
-              </ul>
-            </div>
-          </div>
-
-          <p class="included">Incluye pan y bebida.</p>
-        </section>
-        <!-- MENU END -->
+  <div class="included">Incluye pan, bebida.</div>
+</section>
       </article>
     </section>
 
     <section class="history-card">
-      <h2>Histórico / carrusel de menús</h2>
+      <h2>Menús anteriores</h2>
 
       <div class="history-items">
         <div class="history-item">
-          <span>Próximamente se mostrarán aquí menús recientes del restaurante.</span>
-          <strong>Demo</strong>
+          <span>Pronto podrás consultar aquí los últimos menús publicados por este restaurante.</span>
+          <strong>En preparación</strong>
         </div>
       </div>
     </section>
 
     <footer>
-      Página demo generada para comprobar el flujo: Airtable → plantilla → ficha pública.
+      Buscamenú · Menús del día en Hoyo de Manzanares.
     </footer>
   </main>
 </body>
