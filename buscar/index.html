@@ -88,7 +88,96 @@
       padding: clamp(24px, 4vw, 44px);
       margin-bottom: 22px;
     }
+.demo-map {
+  position: relative;
+  min-height: 280px;
+  margin: 22px 0;
+  border-radius: var(--radius);
+  border: 1px solid rgba(228,213,196,.95);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(176,111,50,.12), rgba(47,125,70,.10)),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 18px, rgba(242,225,205,.45) 18px 36px);
+}
 
+.demo-map::before {
+  content: "";
+  position: absolute;
+  inset: 24px;
+  border: 2px dashed rgba(176,111,50,.22);
+  border-radius: 30px;
+}
+
+.map-pin {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 13px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 900;
+  box-shadow: 0 10px 28px rgba(64,43,24,.16);
+  cursor: pointer;
+}
+
+.map-pin::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 5px rgba(47,125,70,.16);
+}
+
+.pin-casa-pepe {
+  left: 12%;
+  top: 28%;
+}
+
+.pin-focaccia {
+  left: 46%;
+  top: 52%;
+}
+
+.pin-pivo {
+  right: 13%;
+  top: 32%;
+}
+
+.map-label {
+  position: absolute;
+  left: 24px;
+  bottom: 20px;
+  color: var(--muted);
+  font-weight: 800;
+  background: rgba(255,250,242,.82);
+  padding: 10px 13px;
+  border-radius: 14px;
+}
+
+@media (max-width: 700px) {
+  .demo-map {
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .map-pin {
+    position: static;
+    margin: 14px;
+  }
+
+  .map-label {
+    position: static;
+    margin: 6px 14px 14px;
+  }
+}
     h1 {
       font-size: clamp(40px, 7vw, 72px);
       line-height: .95;
@@ -344,10 +433,26 @@
     <section class="hero">
   <h1>Busca menú</h1>
   <p class="subtitle">
-    Encuentra restaurantes por nombre, plato o precio.
+    load(); plato o precio.
   </p>
 </section>
+<section class="demo-map" aria-label="Restaurantes en Hoyo de Manzanares">
+  <button class="map-pin pin-casa-pepe" type="button" data-restaurant="Casa Pepe Demo">
+    Casa Pepe Demo
+  </button>
 
+  <button class="map-pin pin-focaccia" type="button" data-restaurant="Focaccia Demo">
+    Focaccia Demo
+  </button>
+
+  <button class="map-pin pin-pivo" type="button" data-restaurant="Pivo Demo">
+    Pivo Demo
+  </button>
+
+  <div class="map-label">
+    Restaurantes con menú publicado hoy
+  </div>
+</section>
     <section class="filters" aria-label="Filtros de búsqueda">
       <div class="field">
         <label for="restaurant">Restaurante</label>
@@ -828,7 +933,25 @@ els.results.innerHTML = `
       input.addEventListener('input', apply);
       input.addEventListener('change', apply);
     }
+for (const button of document.querySelectorAll('[data-restaurant]')) {
 
+  button.addEventListener('click', () => {
+
+    els.restaurant.value = button.dataset.restaurant;
+
+    apply();
+
+    document.querySelector('.summary').scrollIntoView({
+
+      behavior: 'smooth',
+
+      block: 'start'
+
+    });
+
+  });
+
+}
     load();
   </script>
 </body>
