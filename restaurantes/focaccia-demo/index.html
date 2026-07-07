@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -5,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Focaccia Demo · Buscamenú</title>
   <meta name="description" content="Plato del día de Focaccia Demo en Hoyo de Manzanares.">
-
   <style>
     :root {
       --bg: #f6f1e8;
@@ -304,28 +304,24 @@
       line-height: 1;
     }
 
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .menu-section {
+    .single-dish {
       background: #fff;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
+      border-radius: 22px;
+      padding: 24px;
     }
 
-    .menu-section h3 {
-      margin: 0 0 10px;
-      font-size: 19px;
+    .single-dish h3 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      letter-spacing: -.03em;
     }
 
-    .menu-section ul {
+    .single-dish p {
       margin: 0;
-      padding-left: 20px;
-      line-height: 1.75;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 18px;
     }
 
     .included {
@@ -366,8 +362,7 @@
 
     @media (max-width: 840px) {
       .hero,
-      .content,
-      .menu-grid {
+      .content {
         grid-template-columns: 1fr;
       }
 
@@ -404,13 +399,12 @@
 
           <h1>Focaccia Demo</h1>
 
-          <p class="subtitle">
-            Ficha de prueba de Buscamenú para un restaurante que publica un plato del día
-            en lugar de un menú clásico completo.
+                  <p class="subtitle">
+            Plato del día preparado para hoy, con una propuesta sencilla y fácil de encontrar por ingredientes.
           </p>
         </div>
 
-        <div class="status">✅ Plato del día disponible</div>
+        <div class="status">Plato del día</div>
       </article>
 
       <aside class="image-card">
@@ -418,7 +412,7 @@
           <div>
             <div class="icon">🥪</div>
             <h2>Focaccia Demo</h2>
-            <p>Imagen genérica Buscamenú hasta que el restaurante suba foto o logo.</p>
+            <p>Imagen genérica Buscamenú</p>
           </div>
         </div>
       </aside>
@@ -444,14 +438,11 @@
             <strong>910000002</strong>
           </div>
 
-          <div class="detail">
-            <span>Identificador público</span>
-            <strong>focaccia-demo</strong>
-          </div>
+        
         </div>
 
         <nav class="actions" aria-label="Acciones del restaurante">
-          <a class="button primary" href="https://wa.me/34600000002">💬 Reservar por WhatsApp</a>
+          <a class="button primary" href="#">💬 Contactar por WhatsApp</a>
           <a class="button accent" href="tel:910000002">📞 Llamar</a>
           <a class="button" href="https://maps.google.com" target="_blank" rel="noopener">🗺️ Ver en Google Maps</a>
           <a class="button" href="#">📋 Ver carta</a>
@@ -459,46 +450,45 @@
       </aside>
 
       <article class="menu-card">
-        <!-- MENU START -->
-        <section class="menu-dia" data-menu-id="focaccia-demo_2026-06-27">
+        <section class="menu-dia">
           <div class="menu-title-row">
             <div>
               <p class="eyebrow">Plato de hoy</p>
-              <h2>Plato del día</h2>
+<h2>Plato del día</h2>
             </div>
 
             <div class="price">9,50 €</div>
           </div>
 
-          <div class="menu-grid">
-            <div class="menu-section">
-              <h3>Plato del día</h3>
-              <ul>
-                <li>Focaccia de burrata</li>
-              </ul>
-            </div>
+          <div class="single-dish">
+            <h3>Focaccia de burrata</h3>
+            <p>
+              Focaccia con burrata, pesto, rúcula y mortadela. Una opción sencilla,
+              directa y fácilmente buscable por ingredientes.
+            </p>
           </div>
 
-          <p class="included">Focaccia con burrata, pesto, rúcula y mortadela.</p>
+          <p class="included">
+            Ideal para buscar por ingredientes como “burrata”, “focaccia” o “pesto”.
+          </p>
         </section>
-        <!-- MENU END -->
       </article>
     </section>
 
-    <section class="history-card">
-      <h2>Histórico / carrusel de menús</h2>
+   <section class="history-card">
+  <h2>Menús anteriores</h2>
 
-      <div class="history-items">
-        <div class="history-item">
-          <span>Próximamente se mostrarán aquí platos y menús recientes del restaurante.</span>
-          <strong>Demo</strong>
-        </div>
-      </div>
-    </section>
+  <div class="history-items">
+    <div class="history-item">
+      <span>Pronto podrás consultar aquí los últimos menús publicados por este restaurante.</span>
+      <strong>En preparación</strong>
+    </div>
+  </div>
+</section>
 
-    <footer>
-      Página demo generada para comprobar el flujo: Airtable → plantilla → ficha pública.
-    </footer>
+<footer>
+  Buscamenú · Menús del día en Hoyo de Manzanares.
+</footer>
   </main>
 </body>
 </html>
