@@ -391,7 +391,7 @@
     <section id="results" class="results" aria-live="polite"></section>
 
     <footer>
-      Buscamenú · Datos de demostración preparados para el flujo Airtable → JSON → web.
+      Buscamenú · Menús del día en Hoyo de Manzanares.
     </footer>
   </main>
 
@@ -790,18 +790,23 @@
 
         state.localidad = data.localidad || null;
         state.dataDate = data.fecha || '';
-        state.all = asArray(data.menus).map(item => mapEntry(item, data));
-        state.filtered = [...state.all];
+     state.all = asArray(data.menus).map(item => mapEntry(item, data));
+state.filtered = [];
 
-        if (state.localidad && state.localidad.nombre) {
-          els.locationLabel.textContent = `Menús en ${state.localidad.nombre}`;
-        }
+if (state.localidad && state.localidad.nombre) {
+  els.locationLabel.textContent = `Menús en ${state.localidad.nombre}`;
+}
 
-        if (state.dataDate) {
-          els.dateLabel.textContent = `Fecha: ${formatDate(state.dataDate)}`;
-        }
+if (state.dataDate) {
+  els.dateLabel.textContent = `Fecha: ${formatDate(state.dataDate)}`;
+}
 
-        render();
+els.countLabel.textContent = 'Busca por restaurante, plato o precio';
+els.results.innerHTML = `
+  <div class="empty">
+    Introduce una búsqueda para ver los menús disponibles.
+  </div>
+`;
       } catch (error) {
         els.countLabel.textContent = 'Error al cargar menús';
         els.results.innerHTML = `
