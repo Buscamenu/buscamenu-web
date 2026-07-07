@@ -533,7 +533,13 @@
       if (parts.length !== 3) return value;
       return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
-
+function todayLocalISO() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
     function numberFromPrice(value) {
       if (typeof value === 'number') return value;
       const cleaned = String(value || '')
@@ -900,9 +906,7 @@ if (state.localidad && state.localidad.nombre) {
   els.locationLabel.textContent = `Menús en ${state.localidad.nombre}`;
 }
 
-if (state.dataDate) {
-  els.dateLabel.textContent = `Fecha: ${formatDate(state.dataDate)}`;
-}
+els.dateLabel.textContent = `Fecha: ${formatDate(todayLocalISO())}`;
 
 els.countLabel.textContent = 'Busca por restaurante, plato o precio';
 els.results.innerHTML = `
