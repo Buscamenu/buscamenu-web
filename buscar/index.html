@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Buscar menús · Buscamenú</title>
+  <title>Busca menú · Buscamenú</title>
   <meta name="description" content="Buscador de menús del día por localidad, restaurante, plato y precio.">
 
   <style>
@@ -342,12 +342,11 @@
     </header>
 
     <section class="hero">
-      <h1>Buscar menús de hoy</h1>
-      <p class="subtitle">
-        Encuentra restaurantes por nombre, plato, precio máximo o condiciones incluidas.
-        Si un restaurante tiene varios menús, cada menú conserva su propio precio.
-      </p>
-    </section>
+  <h1>Busca menú</h1>
+  <p class="subtitle">
+    Encuentra restaurantes por nombre, plato o precio.
+  </p>
+</section>
 
     <section class="filters" aria-label="Filtros de búsqueda">
       <div class="field">
@@ -700,11 +699,10 @@
             <h2>${esc(restaurant.nombre)}</h2>
 
             <div class="meta">
-              ${restaurant.direccion ? `<span class="pill">📍 ${esc(restaurant.direccion)}</span>` : ''}
-              ${restaurant.categoria_cocina ? `<span class="pill">🍲 ${esc(restaurant.categoria_cocina)}</span>` : ''}
-              ${minPrice ? `<span class="pill">Desde ${esc(String(minPrice).replace('.', ','))} €</span>` : ''}
-              ${entry.menu.tipo ? `<span class="pill">${esc(entry.menu.tipo)}</span>` : ''}
-            </div>
+  ${restaurant.direccion ? `<span class="pill">📍 ${esc(restaurant.direccion)}</span>` : ''}
+  ${restaurant.categoria_cocina ? `<span class="pill">🍲 ${esc(restaurant.categoria_cocina)}</span>` : ''}
+  ${minPrice ? `<span class="pill">Menú desde ${esc(String(minPrice).replace('.', ','))} €</span>` : ''}
+</div>
 
             <div class="menus">
               ${menusHtml}
